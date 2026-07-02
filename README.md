@@ -1,36 +1,106 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# lalitkakkar.vercel.app
+
+Personal portfolio website built with Next.js 15, TypeScript, and Tailwind CSS v4.
+
+[![Deploy with Vercel](https://vercel.com/button)](https://lalitkakkar.vercel.app)
+
+## Tech Stack
+
+| Layer     | Choice                      |
+| --------- | --------------------------- |
+| Framework | Next.js 15 (App Router)     |
+| Language  | TypeScript                  |
+| Styling   | Tailwind CSS v4 + shadcn/ui |
+| Animation | Framer Motion               |
+| Content   | MDX via next-mdx-remote     |
+| Icons     | Tabler Icons + Devicons     |
+| Analytics | Vercel Analytics            |
+| Font      | Space Grotesk               |
+| Deploy    | Vercel                      |
+
+## Features
+
+- Animated hero with role flip effect
+- Work experience timeline with collapsible positions and duration calculation
+- Projects grid with type badges and GitHub/npm/live links
+- Tech stack table with Devicon brand icons
+- MDX blog with code blocks, copy button, and RSS feed
+- Resume viewer embedded from Google Drive
+- Dynamic OG images per page via `@vercel/og`
+- JSON-LD Person schema for Google rich results
+- Dark/light mode with `next-themes`
+- TOC minimap for in-page navigation
+- Animated content rails with scroll progress indicator and section labels
+- Sitemap and robots.txt auto-generated
+
+## Project Structure
+
+```
+├── app/                    # Next.js App Router
+│   ├── blog/               # Blog listing + MDX post pages
+│   │   ├── [slug]/         # Dynamic post page
+│   │   └── feed.xml/       # RSS feed route handler
+│   ├── projects/           # All projects page
+│   ├── resume/             # Google Drive resume viewer
+│   ├── work/               # Full work experience page
+│   ├── layout.tsx          # Root layout, metadata, JSON-LD
+│   └── page.tsx            # Home page
+├── components/
+│   ├── icon/               # Animated custom icons
+│   ├── layout/             # Navbar, footer, rails, scroll-to-top
+│   ├── mdx/                # MDX code block with copy button
+│   ├── providers/          # Theme provider
+│   ├── sections/           # Hero, Experience, Projects, Stack, Blog, Contact
+│   └── ui/                 # shadcn/ui + custom components
+├── config/
+│   └── site.ts             # Single source of truth for all site config
+├── content/
+│   └── blog/               # MDX blog posts
+├── data/                   # Typed data files for experience, projects, stack
+├── hooks/                  # useActiveHeading
+├── lib/
+│   ├── mdx.ts              # Blog post reading + frontmatter parsing
+│   └── variants.ts         # Shared Framer Motion variants
+└── public/                 # Static assets
+```
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+# Clone the repo
+git clone https://github.com/kakkar2/portfolio.git
+cd portfolio
+
+# Install dependencies
+npm install
+
+# Start dev server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Configuration
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+All site-wide config lives in `config/site.ts` — name, bio, links, resume URL.
+Blog posts are MDX files in `content/blog/` with frontmatter:
 
-## Learn More
+```mdx
+---
+title: 'Post title'
+description: 'Short description'
+date: '2026-06-15'
+tags: ['tag1', 'tag2']
+---
+```
 
-To learn more about Next.js, take a look at the following resources:
+Vercel Analytics works without any environment variables.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+<!-- ## License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+MIT — feel free to use this as inspiration for your own portfolio.
+If you do, a credit or a star on the repo is appreciated but not required. -->
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Built by [Lalit Kakkar](https://lalitkakkar.vercel.app)
