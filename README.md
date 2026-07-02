@@ -8,7 +8,7 @@ Personal portfolio website built with Next.js 15, TypeScript, and Tailwind CSS v
 
 | Layer     | Choice                      |
 | --------- | --------------------------- |
-| Framework | Next.js 15 (App Router)     |
+| Framework | Next.js 16                  |
 | Language  | TypeScript                  |
 | Styling   | Tailwind CSS v4 + shadcn/ui |
 | Animation | Framer Motion               |

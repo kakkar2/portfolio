@@ -9,12 +9,5 @@
   },
   "github": {
     "release": false
-  },
-  "plugins": {
-    "@release-it/conventional-changelog": {
-      "preset": "angular",
-      "infile": "CHANGELOG.md",
-      "header": "# Changelog\n\nAll notable changes are documented here.\n"
-    }
   }
 }
