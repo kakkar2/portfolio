@@ -28,6 +28,9 @@ export const metadata: Metadata = {
   description: `${siteConfig.bio} ${siteConfig.featuredPackage.name} — ${siteConfig.featuredPackage.description}`,
   authors: [{ name: siteConfig.name, url: siteConfig.url }],
   creator: siteConfig.name,
+  verification: {
+    google: 'nIviTjkP_9c6gaLSROd35qIe1sRv_7vMezqgeEbsjWg',
+  },
   openGraph: {
     type: 'website',
     locale: 'en_US',
