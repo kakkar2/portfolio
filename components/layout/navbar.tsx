@@ -14,6 +14,7 @@ import { NavbarLogo } from './navbar-logo'
 const NAV_LINKS = [
   { label: 'Work', href: '/work' },
   { label: 'Projects', href: '/projects' },
+  // { label: 'Components', href: '/components' },
   { label: 'Blog', href: '/blog' },
   { label: 'Resume', href: '/resume' },
 ] as const
@@ -42,7 +43,7 @@ export function Navbar() {
         scrolled && 'border-b border-border/60 bg-background/80 backdrop-blur-md'
       )}
     >
-      <div className="container mx-auto flex h-16 max-w-3xl items-center justify-between sm:px-6 lg:px-8">
+      <div className="container mx-auto flex h-16 max-w-3xl items-center justify-between px-6 lg:px-8">
         {/* Logo */}
         <NavbarLogo />
 

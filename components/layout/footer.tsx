@@ -6,7 +6,7 @@ import { siteConfig } from '@/config/site'
 export function Footer() {
   return (
     <footer className="border-t border-border py-6">
-      <div className="container mx-auto max-w-3xl sm:px-6 lg:px-8">
+      <div className="container mx-auto max-w-3xl px-6 lg:px-8">
         <div className="flex items-center justify-between gap-4">
           <p className="text-xs text-muted-foreground/50 group">
             Designed and built by{' '}
