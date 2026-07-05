@@ -154,7 +154,7 @@ export function Hero() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="h-10 w-10 text-muted-foreground transition-colors hover:text-foreground"
+                  className="h-10 w-10 text-muted-foreground transition-colors hover:text-foreground group"
                   asChild
                 >
                   <a
@@ -163,7 +163,10 @@ export function Hero() {
                     rel={external ? 'noopener noreferrer' : undefined}
                     aria-label={label}
                   >
-                    <Icon className="h-6 w-6" aria-hidden="true" />
+                    <Icon
+                      className="size-4 sm:size-5 group-hover:text-primary transition-colors duration-200"
+                      aria-hidden="true"
+                    />
                   </a>
                 </Button>
               </TooltipTrigger>

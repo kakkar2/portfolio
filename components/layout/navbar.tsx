@@ -42,7 +42,7 @@ export function Navbar() {
         scrolled && 'border-b border-border/60 bg-background/80 backdrop-blur-md'
       )}
     >
-      <div className="container mx-auto flex h-16 max-w-3xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto flex h-16 max-w-3xl items-center justify-between sm:px-6 lg:px-8">
         {/* Logo */}
         <NavbarLogo />
 

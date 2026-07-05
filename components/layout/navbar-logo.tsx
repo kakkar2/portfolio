@@ -19,7 +19,7 @@ const draw = (delay: number) => ({
 
 export function NavbarLogo() {
   const prefersReducedMotion = useReducedMotion()
-  const s = prefersReducedMotion ? 0 : 1 // speed multiplier — 0 skips all delays
+  const s = prefersReducedMotion ? 0 : 1
 
   return (
     <Link
@@ -36,7 +36,7 @@ export function NavbarLogo() {
         aria-hidden="true"
         initial="hidden"
         animate="visible"
-        className="shrink-0 text-foreground"
+        className="shrink-0 text-primary"
       >
         {/* Subtle container box — fades in last */}
         <motion.rect

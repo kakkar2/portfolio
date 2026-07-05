@@ -26,6 +26,12 @@ export const homeTocItems: TOCItemType[] = [
     meta: { type: 'chore', message: 'learn continuously' },
   },
   {
+    title: 'GitHub',
+    url: '#github',
+    depth: 2,
+    meta: { type: 'feat', message: 'contribute consistently' },
+  },
+  {
     title: 'Writing',
     url: '#blog',
     depth: 2,

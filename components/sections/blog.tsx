@@ -36,7 +36,7 @@ export function BlogSection({ posts }: { posts: BlogPostMeta[] }) {
   if (posts.length === 0) return null
 
   return (
-    <section aria-labelledby="blog-heading" id="blog" className="py-10">
+    <section aria-labelledby="blog-heading" id="blog" className="py-6">
       <motion.div
         variants={containerVariants}
         initial="hidden"

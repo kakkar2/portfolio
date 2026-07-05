@@ -5,6 +5,8 @@ import { useState } from 'react'
 
 import { cn } from '@/lib/utils'
 
+import { Tooltip, TooltipContent, TooltipTrigger } from './tooltip'
+
 interface CopyButtonProps {
   /** The text value to copy to clipboard */
   value?: string
@@ -45,22 +47,32 @@ export function CopyButton({
   }
 
   return (
-    <button
-      onClick={handleCopy}
-      aria-label={copied ? copiedLabel : label}
-      title={copied ? copiedLabel : label}
-      className={cn(
-        'rounded-md p-1.5 transition-colors',
-        'text-muted-foreground hover:bg-muted hover:text-foreground',
-        copied && 'text-emerald-500 hover:text-emerald-500',
-        className
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <button
+          onClick={handleCopy}
+          aria-label={copied ? copiedLabel : label}
+          title={copied ? copiedLabel : label}
+          className={cn(
+            'rounded-md p-1.5 transition-colors cursor-pointer',
+            'text-muted-foreground hover:bg-muted hover:text-foreground',
+            copied && 'text-emerald-500 hover:text-emerald-500',
+            className
+          )}
+        >
+          {copied ? (
+            <IconCheck size={size} aria-hidden="true" />
+          ) : (
+            <IconCopy size={size} aria-hidden="true" />
+          )}
+        </button>
+      </TooltipTrigger>
+
+      {!copied && (
+        <TooltipContent side="bottom" className="flex items-center gap-3">
+          Copy
+        </TooltipContent>
       )}
-    >
-      {copied ? (
-        <IconCheck size={size} aria-hidden="true" />
-      ) : (
-        <IconCopy size={size} aria-hidden="true" />
-      )}
-    </button>
+    </Tooltip>
   )
 }

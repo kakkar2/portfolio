@@ -15,7 +15,6 @@ export function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
 
-  // Prevent hydration mismatch — render nothing until mounted on client
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true)
@@ -61,13 +60,13 @@ export function ThemeToggle() {
           aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
           className={cn(
             buttonVariants({ variant: 'ghost', size: 'icon' }),
-            'h-9 w-9 text-muted-foreground transition-colors hover:text-foreground'
+            'w-10 h-10 text-muted-foreground transition-colors hover:text-foreground cursor-pointer'
           )}
         >
           {isDark ? (
-            <IconSun size={18} aria-hidden="true" />
+            <IconSun size={20} aria-hidden="true" />
           ) : (
-            <IconMoon size={18} aria-hidden="true" />
+            <IconMoon size={20} aria-hidden="true" />
           )}
         </button>
       </TooltipTrigger>

@@ -7,6 +7,7 @@ import { ContentRails } from '@/components/layout/content-rails'
 import { Footer } from '@/components/layout/footer'
 import { Navbar } from '@/components/layout/navbar'
 import { ScrollToTop } from '@/components/layout/scroll-to-top'
+import { ThemePresetProvider } from '@/components/providers/theme-preset-provider'
 import { ThemeProvider } from '@/components/providers/theme-provider'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { schema, siteConfig } from '@/config/site'
@@ -92,15 +93,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           enableSystem
           disableTransitionOnChange
         >
-          <TooltipProvider>
-            <Navbar />
-            <ContentRails />
-            {children}
-            <Footer />
-            <Analytics />
-            <SpeedInsights />
-            <ScrollToTop />
-          </TooltipProvider>
+          <ThemePresetProvider>
+            <TooltipProvider>
+              <Navbar />
+              <ContentRails />
+              {children}
+              <Footer />
+              <Analytics />
+              <SpeedInsights />
+              <ScrollToTop />
+            </TooltipProvider>
+          </ThemePresetProvider>
         </ThemeProvider>
       </body>
     </html>

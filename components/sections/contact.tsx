@@ -33,7 +33,7 @@ export function ContactSection() {
   const resolved = prefersReducedMotion ? reducedItemVariants : itemVariants
 
   return (
-    <section aria-labelledby="contact-heading" className="py-10" id="contact">
+    <section aria-labelledby="contact-heading" className="py-6" id="contact">
       <motion.div
         variants={containerVariants}
         initial="hidden"
@@ -41,7 +41,6 @@ export function ContactSection() {
         viewport={{ once: true, margin: '-80px' }}
         className="space-y-8"
       >
-        {/* Heading + description */}
         <motion.div variants={resolved} className="space-y-3">
           <h2
             id="contact-heading"
@@ -56,13 +55,16 @@ export function ContactSection() {
           </p>
         </motion.div>
 
-        {/* Email + Phone — combined row */}
         <motion.div variants={resolved}>
           <p className="mb-3 text-xs uppercase tracking-widest text-muted-foreground/50">Contact</p>
-          <div className="inline-flex flex-col sm:flex-row items-stretch sm:items-center divide-y sm:divide-y-0 sm:divide-x divide-border rounded-xl border border-border bg-muted/30 overflow-hidden">
+          <div className="inline-flex flex-col sm:flex-row items-stretch sm:items-center divide-y sm:divide-y-0 sm:divide-x divide-border rounded-xl border border-border bg-muted/30 overflow-hidden hover:bg-secondary/20 transition-colors duration-200">
             {/* Email */}
-            <div className="flex items-center gap-2.5 px-4 py-3">
-              <IconMail size={15} className="shrink-0 text-muted-foreground" aria-hidden="true" />
+            <div className="flex items-center gap-2.5 px-4 py-3 group">
+              <IconMail
+                size={15}
+                className="shrink-0 text-muted-foreground group-hover:text-primary transition-colors duration-200"
+                aria-hidden="true"
+              />
               <a
                 href={siteConfig.links.email}
                 className="font-mono text-sm text-foreground underline-offset-4 hover:underline"
@@ -77,8 +79,12 @@ export function ContactSection() {
             </div>
 
             {/* Phone */}
-            <div className="flex items-center gap-2.5 px-4 py-3">
-              <IconPhone size={15} className="shrink-0 text-muted-foreground" aria-hidden="true" />
+            <div className="flex items-center gap-2.5 px-4 py-3 group">
+              <IconPhone
+                size={15}
+                className="shrink-0 text-muted-foreground group-hover:text-primary transition-colors duration-200"
+                aria-hidden="true"
+              />
               <a
                 href={`tel:${siteConfig.phone}`}
                 className="font-mono text-sm text-foreground underline-offset-4 hover:underline"
@@ -89,7 +95,6 @@ export function ContactSection() {
           </div>
         </motion.div>
 
-        {/* Social row */}
         <motion.div variants={resolved}>
           <p className="mb-3 text-xs uppercase tracking-widest text-muted-foreground/50">
             Elsewhere
@@ -103,13 +108,17 @@ export function ContactSection() {
                 rel="noopener noreferrer"
                 aria-label={label}
                 className={cn(
-                  'flex items-center gap-2 rounded-lg px-3 py-2',
+                  'flex items-center gap-2 rounded-lg px-3 py-2 group',
                   'text-xs text-muted-foreground',
                   'border border-transparent transition-all duration-150',
                   'hover:border-border hover:bg-muted/50 hover:text-foreground'
                 )}
               >
-                <Icon size={14} aria-hidden="true" />
+                <Icon
+                  size={14}
+                  className="group-hover:text-primary transition-colors duration-200"
+                  aria-hidden="true"
+                />
                 {label}
               </a>
             ))}

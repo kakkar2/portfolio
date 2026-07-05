@@ -120,8 +120,8 @@ function ExperiencePositionItem({ position }: { position: ExperiencePosition }) 
           <div className="relative z-10 mb-1 flex items-start gap-3 text-sm">
             <div
               className={cn(
-                'flex size-6 shrink-0 items-center justify-center rounded-lg',
-                'border border-muted-foreground/15 bg-muted text-muted-foreground',
+                'flex size-7 shrink-0 items-center justify-center rounded-lg',
+                'border border-muted-foreground/15 bg-secondary/90 text-foreground',
                 'ring-1 ring-border ring-offset-1 ring-offset-background'
               )}
             >

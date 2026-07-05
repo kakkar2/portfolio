@@ -34,7 +34,7 @@ export function ExperienceSection({ limit }: ExperienceSectionProps) {
   const items = limit ? experiences.slice(0, limit) : experiences
 
   return (
-    <section aria-labelledby="experience-heading" className="py-10" id="experience">
+    <section aria-labelledby="experience-heading" className="py-6" id="experience">
       <motion.div
         variants={resolved}
         initial="hidden"

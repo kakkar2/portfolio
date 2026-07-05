@@ -1,9 +1,10 @@
-import { IconBrandGithub, IconBrandNpm, IconExternalLink } from '@tabler/icons-react'
+'use client'
+
+import { IconBrandGithub, IconBrandNpm, IconDownload, IconExternalLink } from '@tabler/icons-react'
+import { useEffect, useState } from 'react'
 
 import type { Project } from '@/data/projects'
 import { cn } from '@/lib/utils'
-
-// ─── Type badge styles
 
 const TYPE_STYLES: Record<Project['type'], string> = {
   'open-source': 'border-emerald-500/20 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400',
@@ -18,8 +19,16 @@ const TYPE_LABELS: Record<Project['type'], string> = {
 }
 
 export function ProjectCard({ project }: { project: Project }) {
-  // Primary click target: prefer live → github → npm
+  const [downloads, setDownloads] = useState<number | null>(null)
   const primaryHref = project.links.live ?? project.links.github ?? project.links.npm
+
+  useEffect(() => {
+    if (!project.npmPackage) return
+    fetch(`/api/npm-stats?pkg=${project.npmPackage}`)
+      .then((r) => r.json())
+      .then((d) => setDownloads(d.downloads ?? null))
+      .catch(() => {})
+  }, [project.npmPackage])
 
   return (
     <article
@@ -42,7 +51,7 @@ export function ProjectCard({ project }: { project: Project }) {
             {TYPE_LABELS[project.type]}
           </span>
 
-          {/* Title — stretch link covers full card */}
+          {/* Title */}
           <h3 className="font-mono text-sm font-semibold text-foreground">
             {primaryHref ? (
               <a
@@ -60,18 +69,24 @@ export function ProjectCard({ project }: { project: Project }) {
           </h3>
         </div>
 
-        {/* WIP badge */}
-        {project.wip && (
-          <span className="shrink-0 rounded-full border border-amber-500/20 bg-amber-500/10 px-2 py-0.5 text-xs font-medium text-amber-600 dark:text-amber-400">
-            WIP
-          </span>
-        )}
+        {/* Right side — downloads or WIP */}
+        <div className="flex shrink-0 flex-col items-end gap-1.5">
+          {project.wip && (
+            <span className="rounded-full border border-amber-500/20 bg-amber-500/10 px-2 py-0.5 text-xs font-medium text-amber-600 dark:text-amber-400">
+              WIP
+            </span>
+          )}
+          {downloads !== null && (
+            <div className="flex items-center gap-1 text-xs text-muted-foreground/60 tabular-nums">
+              <IconDownload size={11} aria-hidden="true" />
+              <span>{downloads.toLocaleString()}/mo</span>
+            </div>
+          )}
+        </div>
       </div>
 
-      {/* ── Description ── */}
       <p className="flex-1 text-sm leading-relaxed text-muted-foreground">{project.description}</p>
 
-      {/* ── Footer: tech + links ── */}
       <div className="flex items-end justify-between gap-3">
         {/* Tech pills */}
         <ul className="flex flex-wrap gap-1.5" role="list" aria-label="Technologies used">
@@ -84,7 +99,6 @@ export function ProjectCard({ project }: { project: Project }) {
           ))}
         </ul>
 
-        {/* Link icons — z-10 so they sit above the stretch link */}
         <div className="relative z-10 flex shrink-0 items-center gap-0.5">
           {project.links.github && (
             <a

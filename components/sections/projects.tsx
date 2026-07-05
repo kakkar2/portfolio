@@ -42,7 +42,7 @@ export function ProjectsSection({ featured = true }: ProjectsSectionProps) {
   const items = featured ? projects.filter((p) => p.featured) : projects
 
   return (
-    <section aria-labelledby="projects-heading" className="py-10" id="projects">
+    <section aria-labelledby="projects-heading" className="py-6" id="projects">
       <motion.div
         variants={containerVariants}
         initial="hidden"

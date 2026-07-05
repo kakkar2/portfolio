@@ -4,10 +4,9 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 
 const ROLES = [
-  'Full Stack Developer',
-  'React & Next.js Developer',
-  'building things that live on the internet',
-  'obsessed with developer experience',
+  'Frontend-Focused Full Stack Engineer',
+  'Building things that live on the internet',
+  'Obsessed with developer experience',
 ]
 
 export default function RoleFlip() {
@@ -23,32 +22,43 @@ export default function RoleFlip() {
   }, [prefersReducedMotion])
 
   return (
-    <div style={{ perspective: '800px' }} className="relative overflow-hidden">
+    <div
+      style={{
+        perspective: '2000px',
+        perspectiveOrigin: 'center center',
+      }}
+      className="relative overflow-hidden"
+    >
       <AnimatePresence mode="wait">
         <motion.p
           key={ROLES[index]}
           initial={{
             rotateX: -90,
             opacity: 0,
-            y: 20,
+            scale: 0.96,
           }}
+
           animate={{
             rotateX: 0,
             opacity: 1,
-            y: 0,
+            scale: 1,
           }}
+
           exit={{
             rotateX: 90,
             opacity: 0,
-            y: -20,
+            scale: 0.96,
           }}
+
           transition={{
-            duration: 0.65,
-            ease: [0.22, 1, 0.36, 1],
+            duration: 0.8,
+            ease: [0.16, 1, 0.3, 1],
           }}
           style={{
-            transformOrigin: 'center top',
+            transformOrigin: 'center center',
             transformStyle: 'preserve-3d',
+            backfaceVisibility: 'hidden',
+            WebkitBackfaceVisibility: 'hidden',
           }}
           className="shimmer text-sm text-muted-foreground font-semibold sm:text-base"
         >

@@ -32,7 +32,7 @@ export function StackSection() {
   const resolved = prefersReducedMotion ? reducedRowVariants : rowVariants
 
   return (
-    <section aria-labelledby="stack-heading" className="py-10" id="stack">
+    <section aria-labelledby="stack-heading" className="py-6" id="stack">
       <motion.div
         variants={containerVariants}
         initial="hidden"
@@ -59,7 +59,7 @@ export function StackSection() {
               key={category.id}
               role="listitem"
               variants={resolved}
-              className="flex flex-col gap-4 py-5 sm:flex-row sm:gap-0"
+              className="flex flex-col gap-4 py-4 sm:flex-row sm:gap-0"
             >
               {/* Left — numbered label */}
               <div className="flex w-44 shrink-0 items-start gap-2 sm:py-0.5">
