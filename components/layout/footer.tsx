@@ -6,8 +6,8 @@ import { siteConfig } from '@/config/site'
 export function Footer() {
   return (
     <footer className="border-t border-border py-6">
-      <div className="container mx-auto max-w-3xl px-6 lg:px-8">
-        <div className="flex items-center justify-between gap-4">
+      <div className="container mx-auto max-w-3xl px-5 sm:px-6 lg:px-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
           <p className="text-xs text-muted-foreground/50 group">
             Designed and built by{' '}
             <span className="text-muted-foreground group-hover:text-primary transition-colors duration-200">

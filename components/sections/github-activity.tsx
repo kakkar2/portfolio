@@ -60,16 +60,11 @@ export function GithubActivitySection() {
         <motion.div
           variants={resolved}
           className={cn(
-            'rounded-xl border border-border bg-muted/20 p-5',
+            'overflow-x-auto lg:overflow-x-hidden rounded-xl border border-border bg-muted/20 p-5',
             '[&_.react-activity-calendar]:!font-mono',
-            '[&_.react-activity-calendar]:w-full',
-            '[&_.react-activity-calendar_svg]:w-full',
-            '[&_.react-activity-calendar_svg]:h-auto'
+            '[&_.react-activity-calendar_svg]:h-auto',
+            'lg:[&_.react-activity-calendar_svg]:w-full'
           )}
-          //   className={cn(
-          //     'overflow-x-auto rounded-xl border border-border bg-muted/20 p-5',
-          //     '[&_.react-activity-calendar]:!font-mono'
-          //   )}
         >
           {mounted ? (
             <GitHubCalendar

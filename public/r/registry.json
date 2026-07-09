@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "lalit",
+  "homepage": "https://lalitkakkar.vercel.app",
+  "items": [
+    {
+      "name": "copy-button",
+      "type": "registry:ui",
+      "title": "Copy Button",
+      "description": "A minimal button that copies any text to the clipboard with a smooth icon transition.",
+      "dependencies": [],
+      "registryDependencies": ["tooltip"],
+      "files": [
+        {
+          "path": "registry/ui/copy-button.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/copy-button.tsx"
+        }
+      ]
+    }
+  ]
+}

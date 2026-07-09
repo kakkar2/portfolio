@@ -9,20 +9,18 @@ export function CodeBlock({ children, className, ...props }: ComponentProps<'pre
   const preRef = useRef<HTMLPreElement>(null)
 
   return (
-    <div className="not-prose relative my-6">
+    <div className="not-prose group relative my-5">
       <pre
         ref={preRef}
         className={cn(
-          'overflow-x-auto rounded-lg border border-border',
-          'bg-muted/50 px-4 py-4 text-sm leading-relaxed',
+          'overflow-x-auto rounded-xl border border-border',
+          'bg-[#0d0d0d] px-5 py-4 text-sm leading-relaxed',
           className
         )}
         {...props}
       >
         {children}
       </pre>
-
-      {/* <div className="absolute right-2 top-2 z-10"> */}
       <div className="absolute right-3 top-1/2 z-10 -translate-y-1/2">
         <CopyButton
           getValue={() => preRef.current?.textContent ?? ''}

@@ -13,7 +13,7 @@ export default function Home() {
   const recentPosts = getBlogPosts().slice(0, 3)
 
   return (
-    <main className="container max-w-3xl mx-auto px-6 lg:px-8">
+    <main className="container max-w-3xl mx-auto px-5 sm:px-6 lg:px-8">
       <div className="hidden md:block fixed right-6 top-1/2 z-50 -translate-y-1/2">
         <TOCMinimap items={homeTocItems} />
       </div>

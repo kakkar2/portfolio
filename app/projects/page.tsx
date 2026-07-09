@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function ProjectsPage() {
   return (
-    <main className="container mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 pt-24 min-h-screen">
+    <main className="container mx-auto max-w-3xl px-5 sm:px-6 lg:px-8 pt-24 min-h-screen">
       <ProjectsSection featured={false} />
     </main>
   )

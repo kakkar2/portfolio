@@ -82,6 +82,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body
+        suppressHydrationWarning
         className={cn(
           spaceGrotesk.variable,
           'min-h-screen bg-background font-sans text-foreground antialiased'

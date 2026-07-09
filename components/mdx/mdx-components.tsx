@@ -1,5 +1,5 @@
-import { CodeBlock } from '@/components/mdx/code-block'
+import { MdxPre } from '@/components/mdx/mdx-pre'
 
 export const mdxComponents = {
-  pre: CodeBlock,
+  pre: MdxPre,
 }

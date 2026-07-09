@@ -56,3 +56,9 @@ export function getBlogPost(slug: string): BlogPost | null {
     content,
   }
 }
+
+export function getComponentSource(sourceFile: string): string {
+  const filePath = path.join(process.cwd(), sourceFile)
+  if (!fs.existsSync(filePath)) return ''
+  return fs.readFileSync(filePath, 'utf-8')
+}

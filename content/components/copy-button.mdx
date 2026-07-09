@@ -1,0 +1,46 @@
+---
+name: copy-button
+title: Copy Button
+description: A minimal button that copies any text to the clipboard with a smooth icon transition.
+icon: IconCopy
+category: ui
+tags: [button, clipboard, utility]
+dependencies: []
+registryDeps: [tooltip]
+sourceFile: registry/ui/copy-button.tsx
+installPath: components/ui/copy-button.tsx
+---
+
+## Features
+
+- Copies static strings or dynamically reads from a DOM ref at click time.
+- Smooth icon swap from copy to check with a 2s reset.
+- Tooltip confirms the action — disappears after copy.
+- Fully accessible — `aria-label` updates on state change.
+- Accepts a custom duration, icon size, and `className`.
+
+## Demo
+
+```tsx
+import { CopyButton } from '@/components/ui/copy-button'
+
+export default function CopyButtonDemo() {
+  return (
+    <div className="flex items-center gap-2 rounded-lg border border-border bg-muted/30 px-4 py-2.5">
+      <span className="font-mono text-sm">lalitkakkar50@gmail.com</span>
+      <CopyButton value="lalitkakkar50@gmail.com" label="Copy email" copiedLabel="Email copied" />
+    </div>
+  )
+}
+```
+
+## Usage
+
+```tsx
+import { CopyButton } from "@/components/ui/copy-button"
+
+<CopyButton value="Hello world" />
+
+const ref = useRef<HTMLPreElement>(null)
+<CopyButton getValue={() => ref.current?.textContent ?? ""} />
+```

@@ -15,7 +15,7 @@ export default function ResumePage() {
   const downloadUrl = siteConfig.resumeUrl.replace('/preview', '/view')
 
   return (
-    <main className="container mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 pt-24 pb-16">
+    <main className="container mx-auto max-w-3xl px-5 sm:px-6 lg:px-8 pt-24 pb-16">
       {/* Header */}
       <div className="mb-6 flex items-center justify-between">
         <div className="space-y-1">

@@ -38,7 +38,7 @@ export function ThemeDock() {
   const activeColor = isDark ? activePreset.primaryDark : activePreset.primary
 
   return (
-    <div ref={ref} className="relative flex items-center justify-end">
+    <div ref={ref} className="relative flex items-center justify-start sm:justify-end">
       {/* Dropdown */}
       <AnimatePresence>
         {open && (

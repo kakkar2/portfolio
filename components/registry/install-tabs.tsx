@@ -1,54 +1,41 @@
 'use client'
 
+import { IconExternalLink } from '@tabler/icons-react'
 import { useState } from 'react'
 
-import { CodeBlock } from '@/components/mdx/code-block'
+import { InstallStep } from '@/components/registry/install-step'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { siteConfig } from '@/config/site'
-import type { RegistryComponent } from '@/data/registry'
+// import type { RegistryComponent } from '@/data/registry'
+import type { ComponentContent } from '@/lib/components-content'
 import { cn } from '@/lib/utils'
 
 const PKG_MANAGERS = ['npm', 'pnpm', 'yarn', 'bun'] as const
 type PkgManager = (typeof PKG_MANAGERS)[number]
 
-function installCmd(pkg: string, manager: PkgManager) {
-  const cmds: Record<PkgManager, string> = {
-    npm: `npm install ${pkg}`,
-    pnpm: `pnpm add ${pkg}`,
-    yarn: `yarn add ${pkg}`,
-    bun: `bun add ${pkg}`,
-  }
-  return cmds[manager]
-}
-
-function Step({ n, title, children }: { n: number; title: string; children: React.ReactNode }) {
-  return (
-    <div className="flex gap-4">
-      <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-border bg-muted/50 font-mono text-xs text-muted-foreground">
-        {n}
-      </div>
-      <div className="flex-1 space-y-3 pt-0.5">
-        <p className="text-sm font-medium text-foreground">{title}</p>
-        {children}
-      </div>
-    </div>
-  )
-}
-
 interface InstallTabsProps {
-  component: RegistryComponent
+  //   component: RegistryComponent
+  component: ComponentContent
+  componentSlot: React.ReactNode
+  cnSlot: React.ReactNode
+  cliSlot: React.ReactNode
+  depsCmd?: React.ReactNode
 }
 
-export function InstallTabs({ component }: InstallTabsProps) {
+export function InstallTabs({
+  component,
+  componentSlot,
+  cnSlot,
+  cliSlot,
+  depsCmd,
+}: InstallTabsProps) {
   const [pkgManager, setPkgManager] = useState<PkgManager>('npm')
 
-  const cliCommand = `npx shadcn@latest add ${siteConfig.url}/r/${component.slug}`
-  const manualCode = component.files[0]?.content ?? ''
   const hasDeps = component.dependencies && component.dependencies.length > 0
+  const hasShadcnDeps = component.registryDeps && component.registryDeps.length > 0
 
   return (
     <Tabs defaultValue="cli" className="w-full">
-      <TabsList className="mb-6 h-9 rounded-lg bg-muted p-1">
+      <TabsList className="mb-6 h-9 w-fit rounded-lg bg-muted p-1">
         <TabsTrigger value="cli" className="rounded-md text-xs">
           CLI
         </TabsTrigger>
@@ -59,27 +46,53 @@ export function InstallTabs({ component }: InstallTabsProps) {
 
       {/* ── CLI ── */}
       <TabsContent value="cli" className="mt-0">
-        <div className="space-y-6">
-          <Step n={1} title="Run the shadcn CLI command">
-            <CodeBlock>
-              <code>{cliCommand}</code>
-            </CodeBlock>
-            <p className="text-xs text-muted-foreground">
-              This installs the component directly into your project. Update the import paths to
-              match your folder structure.
-            </p>
-          </Step>
-        </div>
+        <InstallStep n={1} title="Run the shadcn CLI command">
+          <div className="space-y-2">
+            {/* Package manager switcher */}
+            <div className="flex gap-1 rounded-lg border border-border bg-muted/30 p-1 w-fit">
+              {PKG_MANAGERS.map((pm) => (
+                <button
+                  key={pm}
+                  onClick={() => setPkgManager(pm)}
+                  className={cn(
+                    'rounded-md px-2.5 py-1 font-mono text-xs transition-colors',
+                    pkgManager === pm
+                      ? 'bg-background text-foreground shadow-sm'
+                      : 'text-muted-foreground hover:text-foreground'
+                  )}
+                >
+                  {pm}
+                </button>
+              ))}
+            </div>
+
+            {/* Hide/show each pre-rendered slot based on selected pm */}
+            <div
+              className="[&>div]:hidden"
+              style={{}}
+              ref={(el) => {
+                if (!el) return
+                el.querySelectorAll<HTMLDivElement>('[data-pm]').forEach((div) => {
+                  div.style.display = div.dataset.pm === pkgManager ? 'block' : 'none'
+                })
+              }}
+            >
+              {cliSlot}
+            </div>
+          </div>
+          <p className="text-xs text-muted-foreground">
+            This installs the component directly. Update import paths to match your setup.
+          </p>
+        </InstallStep>
       </TabsContent>
 
       {/* ── Manual ── */}
       <TabsContent value="manual" className="mt-0">
         <div className="space-y-8">
-          {/* Step 1 — deps */}
+          {/* Step 1 — npm deps */}
           {hasDeps && (
-            <Step n={1} title="Install dependencies">
-              {/* Package manager switcher */}
-              <div className="mb-2 flex gap-1 rounded-lg border border-border bg-muted/30 p-1 w-fit">
+            <InstallStep n={1} title="Install the required dependencies">
+              <div className="flex gap-1 rounded-lg border border-border bg-muted/30 p-1 w-fit mb-2">
                 {PKG_MANAGERS.map((pm) => (
                   <button
                     key={pm}
@@ -95,31 +108,55 @@ export function InstallTabs({ component }: InstallTabsProps) {
                   </button>
                 ))}
               </div>
-              <CodeBlock>
-                <code>{installCmd(component.dependencies!.join(' '), pkgManager)}</code>
-              </CodeBlock>
-            </Step>
+              {depsCmd}
+            </InstallStep>
           )}
 
-          {/* Step 2 — copy file */}
-          <Step n={hasDeps ? 2 : 1} title="Copy the component into your project">
-            <p className="font-mono text-xs text-muted-foreground/60 -mb-1">
-              {component.files[0]?.path}
-            </p>
-            <CodeBlock>
-              <code>{manualCode}</code>
-            </CodeBlock>
-          </Step>
+          {/* Step — cn utility */}
+          <InstallStep n={hasDeps ? 2 : 1} title="Add a cn helper">
+            <div className="rounded-lg border border-border bg-muted/50 px-3 py-2 font-mono text-xs text-muted-foreground">
+              lib/utils.ts
+            </div>
+            {cnSlot}
+          </InstallStep>
 
-          {/* Step 3 — update imports */}
-          <Step n={hasDeps ? 3 : 2} title="Update import paths to match your project setup">
-            <p className="text-xs text-muted-foreground">
-              Make sure{' '}
-              <code className="font-mono text-xs bg-muted px-1 py-0.5 rounded">@/lib/utils</code>{' '}
-              resolves correctly, or replace it with your own{' '}
-              <code className="font-mono text-xs bg-muted px-1 py-0.5 rounded">cn()</code> utility.
-            </p>
-          </Step>
+          {/* Step — shadcn deps */}
+          {hasShadcnDeps && (
+            <InstallStep n={hasDeps ? 3 : 2} title="Install the required shadcn/ui components">
+              <ul className="space-y-1.5">
+                {component.registryDeps!.map((dep) => (
+                  <li key={dep}>
+                    <a
+                      href={`https://ui.shadcn.com/docs/components/${dep}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-1.5 text-sm text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
+                    >
+                      <IconExternalLink size={12} aria-hidden="true" />
+                      {dep}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </InstallStep>
+          )}
+
+          {/* Step — copy component */}
+          <InstallStep
+            n={[hasDeps, true, hasShadcnDeps].filter(Boolean).length + 1}
+            title="Copy and paste the following code into your project"
+          >
+            <div className="rounded-lg border border-border bg-muted/50 px-3 py-2 font-mono text-xs text-muted-foreground">
+              {component.installPath}
+            </div>
+            {componentSlot}
+          </InstallStep>
+
+          {/* Step — update imports */}
+          <InstallStep
+            n={[hasDeps, true, hasShadcnDeps].filter(Boolean).length + 2}
+            title="Update the import paths to match your project setup"
+          />
         </div>
       </TabsContent>
     </Tabs>

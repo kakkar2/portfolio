@@ -35,7 +35,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   if (!post) notFound()
 
   return (
-    <main className="container mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 pt-24 pb-24">
+    <main className="container mx-auto max-w-3xl px-5 sm:px-6 lg:px-8 pt-24 pb-24">
       {/* Back link */}
       <Link
         href="/blog"

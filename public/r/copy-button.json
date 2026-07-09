@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "copy-button",
+  "title": "Copy Button",
+  "description": "A minimal button that copies any text to the clipboard with a smooth icon transition.",
+  "dependencies": [],
+  "registryDependencies": ["tooltip"],
+  "files": [
+    {
+      "path": "registry/ui/copy-button.tsx",
+      "content": "'use client'\n\nimport { IconCheck, IconCopy } from '@tabler/icons-react'\nimport { useState } from 'react'\n\nimport { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'\nimport { cn } from '@/lib/utils'\n\ninterface CopyButtonProps {\n  value?: string\n  getValue?: () => string\n  label?: string\n  copiedLabel?: string\n  duration?: number\n  size?: number\n  className?: string\n}\n\nexport function CopyButton({\n  value,\n  getValue,\n  label = 'Copy',\n  copiedLabel = 'Copied',\n  duration = 2000,\n  size = 14,\n  className,\n}: CopyButtonProps) {\n  const [copied, setCopied] = useState(false)\n\n  const handleCopy = async () => {\n    if (copied) return\n    const text = getValue ? getValue() : (value ?? '')\n    try {\n      await navigator.clipboard.writeText(text)\n      setCopied(true)\n      setTimeout(() => setCopied(false), duration)\n    } catch {}\n  }\n\n  return (\n    <Tooltip>\n      <TooltipTrigger asChild>\n        <button\n          onClick={handleCopy}\n          aria-label={copied ? copiedLabel : label}\n          title={copied ? copiedLabel : label}\n          className={cn(\n            'rounded-md p-1.5 transition-colors cursor-pointer',\n            'text-muted-foreground hover:bg-muted hover:text-foreground',\n            copied && 'text-emerald-500 hover:text-emerald-500',\n            className\n          )}\n        >\n          {copied ? (\n            <IconCheck size={size} aria-hidden=\"true\" />\n          ) : (\n            <IconCopy size={size} aria-hidden=\"true\" />\n          )}\n        </button>\n      </TooltipTrigger>\n\n      {!copied && (\n        <TooltipContent side=\"bottom\" className=\"flex items-center gap-3\">\n          Copy\n        </TooltipContent>\n      )}\n    </Tooltip>\n  )\n}\n",
+      "type": "registry:ui",
+      "target": "components/ui/copy-button.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}
