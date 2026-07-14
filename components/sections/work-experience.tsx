@@ -121,7 +121,7 @@ function ExperiencePositionItem({ position }: { position: ExperiencePosition }) 
             <div
               className={cn(
                 'flex size-7 shrink-0 items-center justify-center rounded-lg',
-                'border border-muted-foreground/15 bg-secondary/90 text-foreground',
+                'border border-muted-foreground/15 bg-background text-foreground',
                 'ring-1 ring-border ring-offset-1 ring-offset-background'
               )}
             >

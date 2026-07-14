@@ -32,6 +32,19 @@ export const projects: Project[] = [
     npmPackage: 'create-prodkit',
   },
   {
+    id: 'cfg-generator',
+    name: 'CFG Generator',
+    description:
+      'AI-powered Next.js application that converts Python code into interactive control flow graphs for visualization, comparison, and code analysis.',
+    tech: ['Next.js', 'TypeScript', 'React Flow', 'Tailwind CSS', 'Shadcn UI', 'AI'],
+    links: {
+      github: 'https://github.com/nehaaaak/CFG-Frontend',
+      live: 'https://cfg-codeflow.vercel.app',
+    },
+    featured: true,
+    type: 'personal',
+  },
+  {
     id: 'blog-platform',
     name: 'Blog Platform',
     description:

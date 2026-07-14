@@ -14,15 +14,14 @@ export type ComponentMeta = {
   tags: string[]
   dependencies: string[]
   registryDeps: string[]
+  localDeps: string[]
   sourceFile: string
   installPath: string
 }
 
 export type ComponentContent = ComponentMeta & {
   features: string[]
-  demo: string
   usage: string
-  body: string
 }
 
 export function getComponentMeta(slug: string): ComponentMeta | null {
@@ -30,27 +29,24 @@ export function getComponentMeta(slug: string): ComponentMeta | null {
   if (!fs.existsSync(filePath)) return null
   const raw = fs.readFileSync(filePath, 'utf-8')
   const { data } = matter(raw)
-  //   return data as ComponentMeta
   return {
     slug,
     ...(data as Omit<ComponentMeta, 'slug'>),
+    localDeps: (data.localDeps as string[] | undefined) ?? [],
   }
 }
 
 export function getComponentContent(slug: string): ComponentContent | null {
   const filePath = path.join(CONTENT_DIR, `${slug}.mdx`)
   if (!fs.existsSync(filePath)) return null
-
   const raw = fs.readFileSync(filePath, 'utf-8')
   const { data, content } = matter(raw)
-
   return {
     slug,
     ...(data as Omit<ComponentMeta, 'slug'>),
+    localDeps: (data.localDeps as string[] | undefined) ?? [],
     features: extractFeatures(content),
-    demo: extractCodeBlock(content, 'Demo'),
     usage: extractCodeBlock(content, 'Usage'),
-    body: content,
   }
 }
 
@@ -63,7 +59,13 @@ export function getAllComponentMeta(): ComponentMeta[] {
     .filter(Boolean) as ComponentMeta[]
 }
 
-/** Extract bullet points under a ## heading as a string array */
+/** Read a registry component source file from disk */
+export function getComponentSource(sourceFile: string): string {
+  const filePath = path.join(process.cwd(), sourceFile)
+  if (!fs.existsSync(filePath)) return ''
+  return fs.readFileSync(filePath, 'utf-8')
+}
+
 function extractFeatures(content: string): string[] {
   const match = content.match(/## Features\n([\s\S]*?)(?=\n##|$)/)
   if (!match) return []
@@ -71,10 +73,9 @@ function extractFeatures(content: string): string[] {
     .split('\n')
     .map((l) => l.replace(/^[-*]\s+/, '').trim())
     .filter(Boolean)
-    .map((l) => l.replace(/`([^`]+)`/g, '$1')) // strip backtick formatting
+    .map((l) => l.replace(/`([^`]+)`/g, '$1'))
 }
 
-/** Extract the code block under a ## heading */
 function extractCodeBlock(content: string, heading: string): string {
   const pattern = new RegExp(`## ${heading}\\n+\`\`\`(?:tsx|ts|jsx|js|bash)?\\n([\\s\\S]*?)\`\`\``)
   const match = content.match(pattern)

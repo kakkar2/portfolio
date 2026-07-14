@@ -6,8 +6,6 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { stack } from '@/data/stack'
 import { cn } from '@/lib/utils'
 
-// ─── Variants
-
 const containerVariants = {
   hidden: {},
   show: { transition: { staggerChildren: 0.07 } },

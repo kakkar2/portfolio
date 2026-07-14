@@ -5,17 +5,20 @@ interface InstallStepProps {
   title: string
   children?: React.ReactNode
   className?: string
+  isLast?: boolean
 }
 
-export function InstallStep({ n, title, children, className }: InstallStepProps) {
+export function InstallStep({ n, title, children, className, isLast = false }: InstallStepProps) {
   return (
-    <div className={cn('flex gap-4', className)}>
-      {/* Number bubble */}
-      <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-border bg-muted/50 font-mono text-xs text-muted-foreground">
-        {n}
+    <div className={cn('relative flex gap-4', className)}>
+      <div className="relative flex flex-col items-center">
+        {!isLast && <div className="absolute top-3 -bottom-3 w-px bg-border" />}
+        <div className="relative z-10 flex size-6 shrink-0 items-center justify-center rounded-full border border-border bg-background font-mono text-xs text-muted-foreground">
+          {n}
+        </div>
       </div>
 
-      <div className="flex-1 space-y-3 pt-0.5">
+      <div className={cn('flex-1 space-y-3 pt-0.5', !isLast && 'pb-8')}>
         <p className="text-sm font-medium text-foreground">{title}</p>
         {children}
       </div>

@@ -40,9 +40,7 @@ export function PropsTable({ props }: PropsTableProps) {
                 </div>
               </td>
               <td className="px-4 py-3">
-                <code className="font-mono text-xs text-blue-500 dark:text-blue-400">
-                  {prop.type}
-                </code>
+                <code className="font-mono text-xs">{prop.type}</code>
               </td>
               <td className="px-4 py-3">
                 {prop.default ? (

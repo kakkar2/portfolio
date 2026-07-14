@@ -1,0 +1,38 @@
+---
+title: Package Manager Tabs
+description: A CLI command block with a package manager switcher. Supports npm, pnpm, yarn, and bun with per-manager commands and a one-click copy button.
+icon: IconTerminal2
+category: ui
+tags: [cli, tabs, clipboard, utility]
+dependencies: []
+registryDeps: []
+localDeps: [copy-button]
+sourceFile: registry/ui/package-manager-tabs.tsx
+installPath: components/ui/package-manager-tabs.tsx
+createdAt: 2026-07-13
+---
+
+<ComponentPreview name="package-manager-tabs-demo" />
+
+## Features
+
+- Switches between npm, pnpm, yarn, and bun with a single click.
+- Active package manager icon updates in real time.
+- Lightweight command colorizer — no syntax highlighter dependency.
+- One-click copy button on every command.
+- Fully controlled via a `commands` prop — no magic string templates.
+
+## Usage
+
+```tsx
+import { PackageManagerTabs } from '@/components/ui/package-manager-tabs'
+
+;<PackageManagerTabs
+  commands={{
+    npm: 'npx shadcn@latest add @lalit/copy-button',
+    pnpm: 'pnpm dlx shadcn@latest add @lalit/copy-button',
+    yarn: 'npx shadcn@latest add @lalit/copy-button',
+    bun: 'bunx shadcn@latest add @lalit/copy-button',
+  }}
+/>
+```
