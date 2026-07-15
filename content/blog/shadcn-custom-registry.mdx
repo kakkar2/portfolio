@@ -1,0 +1,248 @@
+---
+title: 'Ship your own component registry with shadcn'
+description: 'How to set up a custom shadcn registry so anyone can install your components with a single CLI command — no copy-paste required.'
+date: '2026-07-15'
+tags: ['shadcn', 'registry', 'components', 'next.js', 'open-source']
+---
+
+I wanted people to install my components the same way they install shadcn/ui ones —
+one command, zero manual file hunting. Turns out shadcn has a registry protocol
+built exactly for this. Here's the complete setup.
+
+## What the registry actually is
+
+At its core it is a JSON contract. When someone runs:
+
+```bash
+npx shadcn@latest add https://yoursite.com/r/copy-button
+```
+
+the CLI fetches `https://yoursite.com/r/copy-button.json`, reads the component
+source embedded inside, and writes the files into their project. That JSON file is
+the registry item. Everything else is just scaffolding to produce it and serve it.
+
+## Folder structure
+
+```text
+your-project/
+├── registry/
+│   └── ui/
+│       └── copy-button.tsx   ← source of truth
+├── registry.json             ← registry manifest
+└── public/
+    └── r/
+        └── copy-button.json  ← built output (what the CLI fetches)
+```
+
+Keep the source in `registry/ui/` and commit it. The `public/r/` output is
+generated — you can gitignore it or commit it, both work.
+
+## Step 1 — Write the component
+
+Write your component as you normally would, except import from paths that make
+sense inside a consumer's project, not your own:
+
+```tsx
+// registry/ui/copy-button.tsx
+'use client'
+
+import { IconCheck, IconCopy } from '@tabler/icons-react'
+import { useState } from 'react'
+
+import { cn } from '@/lib/utils'
+
+// registry/ui/copy-button.tsx
+
+// registry/ui/copy-button.tsx
+
+// registry/ui/copy-button.tsx
+
+// registry/ui/copy-button.tsx
+
+// registry/ui/copy-button.tsx
+
+// registry/ui/copy-button.tsx
+
+// registry/ui/copy-button.tsx
+
+interface CopyButtonProps {
+  value: string
+  className?: string
+}
+
+export function CopyButton({ value, className }: CopyButtonProps) {
+  const [copied, setCopied] = useState(false)
+
+  async function handleCopy() {
+    await navigator.clipboard.writeText(value)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
+
+  return (
+    <button
+      onClick={handleCopy}
+      aria-label={copied ? 'Copied' : 'Copy'}
+      className={cn('...', className)}
+    >
+      {copied ? <IconCheck size={14} /> : <IconCopy size={14} />}
+    </button>
+  )
+}
+```
+
+The `@/lib/utils` import is intentional — it will resolve correctly in the
+consumer's project as long as they have a standard shadcn setup.
+
+## Step 2 — Create registry.json
+
+At the root of your project, create `registry.json`. This is the manifest the
+build command reads:
+
+```json
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "lalit",
+  "homepage": "https://lalitkakkar.vercel.app",
+  "items": [
+    {
+      "name": "copy-button",
+      "type": "registry:ui",
+      "title": "Copy Button",
+      "description": "A minimal button that copies text to clipboard with a smooth icon transition.",
+      "dependencies": ["@tabler/icons-react"],
+      "registryDependencies": ["tooltip"],
+      "files": [
+        {
+          "path": "registry/ui/copy-button.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/copy-button.tsx"
+        }
+      ]
+    }
+  ]
+}
+```
+
+A few things worth knowing:
+
+- `name` at the top level is your registry identifier, not a component name
+- `registryDependencies` takes shadcn component names like `"tooltip"` or `"button"` — the CLI installs them automatically
+- `dependencies` is for npm packages (e.g. `["@tabler/icons-react"]`)
+- `target` is where the file lands in the consumer's project
+
+## Step 3 — Build the registry
+
+```bash
+npx shadcn@latest build
+```
+
+That's it. The CLI reads `registry.json`, reads every file listed under `files`,
+embeds the source as a string, and writes the output to `public/r/`.
+
+The generated `public/r/copy-button.json` looks like:
+
+```json
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "copy-button",
+  "type": "registry:ui",
+  "title": "Copy Button",
+  "description": "...",
+  "registryDependencies": ["tooltip"],
+  "files": [
+    {
+      "path": "registry/ui/copy-button.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/copy-button.tsx",
+      "content": "'use client'\n\nimport { IconCheck ..."
+    }
+  ]
+}
+```
+
+The `content` field is the entire source file as a string. The CLI on the
+consumer's end writes that string to `target` path in their project.
+
+Add a build script to `package.json` so you never forget to rebuild:
+
+```json
+{
+  "scripts": {
+    "registry:build": "shadcn build",
+    "prebuild": "shadcn build"
+  }
+}
+```
+
+The `prebuild` hook means Vercel (or any CI) always has fresh registry files
+before the Next.js build runs.
+
+## Step 4 — Serve the files
+
+Since `public/r/` is inside Next.js's static directory, no extra work needed.
+Deploy and your files are live at:
+
+```
+https://yoursite.com/r/copy-button.json
+```
+
+## Step 5 — Installing from the registry
+
+Anyone can now run:
+
+```bash
+npx shadcn@latest add https://yoursite.com/r/copy-button
+```
+
+The `.json` extension is optional — shadcn appends it automatically.
+
+If you want a cleaner install URL, point a custom domain subdomain at the
+same deployment. `registry.yourdomain.com/r/copy-button` reads nicer than
+the full Vercel URL.
+
+## Adding more components
+
+Adding a second component is three steps:
+
+1. Write the component in `registry/ui/your-component.tsx`
+2. Add an entry to `registry.json`
+3. Run `npm run registry:build`
+
+Each component gets its own JSON file. If one component depends on another from
+your registry, list it in `registryDependencies` using the full URL:
+
+```json
+"registryDependencies": [
+  "tooltip",
+  "https://yoursite.com/r/copy-button.json"
+]
+```
+
+The CLI resolves remote registry deps the same way it resolves shadcn ones.
+
+## Keeping things in sync
+
+The only footgun is forgetting to rebuild after editing a source file. The
+`prebuild` hook handles production. For local dev, wire it into your watch
+script or just run `npm run registry:build` before committing.
+
+If you have a pre-commit hook, add it there:
+
+```json
+{
+  "lint-staged": {
+    "registry/ui/**/*.tsx": ["npm run registry:build"]
+  }
+}
+```
+
+That way the `public/r/` files are always in sync with `registry/ui/` before
+anything gets pushed.
+
+## The result
+
+The components on [my portfolio](https://lalitkakkar.vercel.app/components) are
+all installable this way. The source stays in `registry/ui/`, the built JSON
+lives in `public/r/`, and the CLI does the rest. No npm publish, no separate
+package to maintain — just a JSON file served from a folder.

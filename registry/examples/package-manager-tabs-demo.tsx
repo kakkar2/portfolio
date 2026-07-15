@@ -9,6 +9,7 @@ export default function PackageManagerTabsDemo() {
         yarn: 'npx shadcn@latest add @lalit/copy-button',
         bun: 'bunx shadcn@latest add @lalit/copy-button',
       }}
+      variant="glass"
     />
   )
 }

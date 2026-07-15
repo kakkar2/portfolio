@@ -6,7 +6,7 @@ export const runtime = 'edge'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
-const pageTitle = 'Blog'
+const pageTitle = 'Components'
 
 export default function OgImage() {
   return new ImageResponse(

@@ -45,6 +45,13 @@ export const componentProps: Record<string, PropRow[]> = {
       description: 'Per-package-manager command strings. Keys: npm, pnpm, yarn, bun.',
     },
     {
+      name: 'variant',
+      type: '"default" | "glass"',
+      default: '"default"',
+      description:
+        'Visual style. "glass" renders a frosted-glass surface with backdrop blur, optimised for both light and dark modes.',
+    },
+    {
       name: 'className',
       type: 'string',
       description: 'Additional classes for the root wrapper.',
