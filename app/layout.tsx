@@ -3,6 +3,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 import type { Metadata, Viewport } from 'next'
 import { Space_Grotesk } from 'next/font/google'
 
+import { GlobalSearch } from '@/components/common/global-search'
 import { ContentRails } from '@/components/layout/content-rails'
 import { Footer } from '@/components/layout/footer'
 import { Navbar } from '@/components/layout/navbar'
@@ -96,6 +97,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           <ThemePresetProvider>
             <TooltipProvider>
+              <GlobalSearch />
               <Navbar />
               <ContentRails />
               {children}

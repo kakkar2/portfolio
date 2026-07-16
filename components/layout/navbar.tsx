@@ -1,6 +1,6 @@
 'use client'
 
-import { IconMenu2, IconX } from '@tabler/icons-react'
+import { IconMenu2, IconSearch, IconX } from '@tabler/icons-react'
 import { AnimatePresence, motion } from 'framer-motion'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -9,10 +9,10 @@ import { useEffect, useState } from 'react'
 import { ThemeToggle } from '@/components/layout/theme-toggle'
 import { cn } from '@/lib/utils'
 
+import { Kbd } from '../ui/kbd'
 import { NavbarLogo } from './navbar-logo'
 
 const NAV_LINKS = [
-  // { label: 'Work', href: '/work' },
   { label: 'Projects', href: '/projects' },
   { label: 'Components', href: '/components' },
   { label: 'Blog', href: '/blog' },
@@ -23,6 +23,8 @@ export function Navbar() {
   const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+
+  const isMac = typeof window !== 'undefined' && navigator.platform.toLowerCase().includes('mac')
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16)
@@ -74,6 +76,21 @@ export function Navbar() {
 
         {/* Right side */}
         <div className="flex items-center gap-1">
+          <button
+            onClick={() => window.dispatchEvent(new Event('lalit:search-open'))}
+            aria-label="Open search (Cmd+K)"
+            className="flex items-center gap-1.5 rounded-md px-2 py-1.5 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+          >
+            <IconSearch size={17} aria-hidden="true" />
+            <div className="flex items-center gap-1">
+              <Kbd className="hidden sm:inline-flex">{isMac ? '⌘' : 'Ctrl'}</Kbd>
+              <Kbd className="hidden sm:inline-flex">K</Kbd>
+            </div>
+          </button>
+
+          {/* Separator */}
+          <div className="mx-1 hidden h-4 w-px bg-border sm:block" aria-hidden="true" />
+
           <ThemeToggle />
 
           {/* Mobile menu trigger */}

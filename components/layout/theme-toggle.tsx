@@ -46,7 +46,7 @@ export function ThemeToggle() {
     // Render a same-size invisible placeholder so layout doesn't shift
     return (
       <div
-        className={cn(buttonVariants({ variant: 'ghost', size: 'icon' }), 'h-9 w-9')}
+        className={cn(buttonVariants({ variant: 'ghost', size: 'icon' }), 'h-10 w-10')}
         aria-hidden="true"
       />
     )
@@ -64,9 +64,9 @@ export function ThemeToggle() {
           )}
         >
           {isDark ? (
-            <IconSun size={20} aria-hidden="true" />
+            <IconSun className="size-4.5" aria-hidden="true" />
           ) : (
-            <IconMoon size={20} aria-hidden="true" />
+            <IconMoon className="size-4.5" aria-hidden="true" />
           )}
         </button>
       </TooltipTrigger>
