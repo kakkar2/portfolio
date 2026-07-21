@@ -48,7 +48,7 @@ export function Hero() {
   const resolvedItemVariants = prefersReducedMotion ? reducedItemVariants : itemVariants
 
   return (
-    <section aria-label="Introduction" className="pt-24 pb-14 md:pt-32 relative" id="hero">
+    <section aria-label="Introduction" className="pt-24 pb-10 md:pt-32 relative" id="hero">
       {/* Dashed Top Right Fade Grid */}
       <motion.div
         className="absolute inset-0 z-0 pointer-events-none"

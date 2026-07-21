@@ -15,6 +15,8 @@ import {
   CommandSeparator,
 } from '@/components/ui/command'
 
+import { Kbd } from '../ui/kbd'
+
 type Category = 'page' | 'component' | 'blog'
 
 export type SearchItem = {
@@ -81,6 +83,7 @@ export function GlobalSearchCommand({ items }: { items: SearchItem[] }) {
         setOpen(next)
         if (!next) setQuery('')
       }}
+      className="top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
     >
       <Command>
         <CommandInput
@@ -138,23 +141,32 @@ export function GlobalSearchCommand({ items }: { items: SearchItem[] }) {
         </CommandList>
 
         {/* Keyboard hints */}
-        <div className="flex items-center gap-4 border-t border-border px-4 py-1.5">
-          {HINTS.map(({ keys, label }) => (
-            <span
-              key={label}
-              className="flex items-center gap-1.5 text-xs text-muted-foreground/40"
-            >
-              {keys.map((k) => (
-                <kbd
-                  key={k}
-                  className="inline-flex h-5 min-w-5 items-center justify-center rounded border border-border bg-muted/50 px-1 font-mono text-[10px] text-muted-foreground/60"
-                >
-                  {k}
-                </kbd>
-              ))}
-              {label}
-            </span>
-          ))}
+        <div className="flex items-center justify-between border-t border-border px-4 py-1.5">
+          <div className="flex items-center gap-4">
+            {HINTS.filter((hint) => hint.label !== 'close').map(({ keys, label }) => (
+              <span
+                key={label}
+                className="flex items-center gap-1.5 text-xs text-muted-foreground/40"
+              >
+                {keys.map((k) => (
+                  <Kbd
+                    key={k}
+                    className="inline-flex h-5 min-w-5 items-center justify-center rounded border border-border bg-muted/50 px-1 font-mono text-[10px] text-muted-foreground/60"
+                  >
+                    {k}
+                  </Kbd>
+                ))}
+                {label}
+              </span>
+            ))}
+          </div>
+
+          <span className="flex items-center gap-1.5 text-xs text-muted-foreground/40">
+            <Kbd className="inline-flex h-5 min-w-5 items-center justify-center rounded border border-border bg-muted/50 px-1 font-mono text-[10px] text-muted-foreground/60">
+              esc
+            </Kbd>
+            close
+          </span>
         </div>
       </Command>
     </CommandDialog>

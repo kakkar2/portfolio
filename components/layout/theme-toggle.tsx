@@ -43,7 +43,6 @@ export function ThemeToggle() {
   }, [toggleTheme])
 
   if (!mounted) {
-    // Render a same-size invisible placeholder so layout doesn't shift
     return (
       <div
         className={cn(buttonVariants({ variant: 'ghost', size: 'icon' }), 'h-10 w-10')}

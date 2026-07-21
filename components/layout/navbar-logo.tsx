@@ -17,7 +17,7 @@ const draw = (delay: number) => ({
   },
 })
 
-export function NavbarLogo() {
+export function NavbarLogo({ isName = false }: { isName?: boolean }) {
   const prefersReducedMotion = useReducedMotion()
   const s = prefersReducedMotion ? 0 : 1
 
@@ -100,16 +100,18 @@ export function NavbarLogo() {
         />
       </motion.svg>
 
-      {/* Name — slides in as the box appears */}
-      <motion.span
-        className="text-sm font-medium tracking-tight text-foreground
+      {/* Name */}
+      {isName && (
+        <motion.span
+          className="text-sm font-medium tracking-tight text-foreground
                    transition-opacity duration-200 group-hover:opacity-50"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: s * 0.9, duration: 0.4, ease: 'easeOut' }}
-      >
-        {siteConfig.name}
-      </motion.span>
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: s * 0.9, duration: 0.4, ease: 'easeOut' }}
+        >
+          {siteConfig.name}
+        </motion.span>
+      )}
     </Link>
   )
 }

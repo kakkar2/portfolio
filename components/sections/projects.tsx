@@ -10,7 +10,6 @@ import { projects } from '@/data/projects'
 import { cn } from '@/lib/utils'
 
 // ─── Variants
-
 const containerVariants = {
   hidden: {},
   show: { transition: { staggerChildren: 0.1 } },
@@ -50,8 +49,8 @@ export function ProjectsSection({ featured = true }: ProjectsSectionProps) {
         viewport={{ once: true, margin: '-80px' }}
       >
         {/* Header row */}
-        <motion.div variants={resolved} className="mb-8 flex items-center justify-between">
-          <h2 id="projects-heading" className="text-xl font-semibold tracking-tight">
+        <motion.div variants={resolved} className="mb-5 flex items-center justify-between">
+          <h2 id="projects-heading" className="text-xl sm:text-2xl font-semibold tracking-tight">
             Projects
           </h2>
           {featured && (

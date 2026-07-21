@@ -1,6 +1,6 @@
 'use client'
 
-import { IconMail, IconPhone, IconSend2 } from '@tabler/icons-react'
+import { IconMail, IconPhone } from '@tabler/icons-react'
 import { motion, useReducedMotion } from 'framer-motion'
 
 import { siteConfig } from '@/config/site'
@@ -44,9 +44,9 @@ export function ContactSection() {
         <motion.div variants={resolved} className="space-y-3">
           <h2
             id="contact-heading"
-            className="flex items-center gap-2.5 text-xl font-semibold tracking-tight"
+            className="flex items-center gap-2.5 text-xl sm:text-2xl font-semibold tracking-tight"
           >
-            <IconSend2 size={20} className="text-muted-foreground" aria-hidden="true" />
+            {/* <IconSend2 size={20} className="text-muted-foreground" aria-hidden="true" /> */}
             Get in touch
           </h2>
           <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">

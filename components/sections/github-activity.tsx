@@ -37,8 +37,8 @@ export function GithubActivitySection() {
         whileInView="show"
         viewport={{ once: true, margin: '-80px' }}
       >
-        <motion.div variants={resolved} className="mb-8 flex items-center justify-between">
-          <h2 id="github-heading" className="text-xl font-semibold tracking-tight">
+        <motion.div variants={resolved} className="mb-5 flex items-center justify-between">
+          <h2 id="github-heading" className="text-xl sm:text-2xl font-semibold tracking-tight">
             GitHub Activity
           </h2>
           <Link
@@ -61,7 +61,7 @@ export function GithubActivitySection() {
           variants={resolved}
           className={cn(
             'overflow-x-auto lg:overflow-x-hidden rounded-xl border border-border bg-muted/20 p-5',
-            '[&_.react-activity-calendar]:!font-mono',
+            '[&_.react-activity-calendar]:font-mono!',
             '[&_.react-activity-calendar_svg]:h-auto',
             'lg:[&_.react-activity-calendar_svg]:w-full'
           )}

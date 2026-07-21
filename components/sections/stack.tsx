@@ -41,7 +41,7 @@ export function StackSection() {
         <motion.h2
           variants={resolved}
           id="stack-heading"
-          className="mb-8 text-xl font-semibold tracking-tight"
+          className="mb-5 text-xl sm:text-2xl font-semibold tracking-tight"
         >
           Stack
         </motion.h2>

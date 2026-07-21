@@ -9,7 +9,6 @@ import type { BlogPostMeta } from '@/lib/mdx'
 import { cn } from '@/lib/utils'
 
 // ─── Variants
-
 const containerVariants = {
   hidden: {},
   show: { transition: { staggerChildren: 0.09 } },
@@ -29,6 +28,14 @@ const reducedItemVariants = {
   show: { opacity: 1, transition: { duration: 0.3 } },
 }
 
+const formatDate = (date: string) => {
+  return new Date(date).toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  })
+}
+
 export function BlogSection({ posts }: { posts: BlogPostMeta[] }) {
   const prefersReducedMotion = useReducedMotion()
   const resolved = prefersReducedMotion ? reducedItemVariants : itemVariants
@@ -44,8 +51,8 @@ export function BlogSection({ posts }: { posts: BlogPostMeta[] }) {
         viewport={{ once: true, margin: '-80px' }}
       >
         {/* Header */}
-        <motion.div variants={resolved} className="mb-8 flex items-center justify-between">
-          <h2 id="blog-heading" className="text-xl font-semibold tracking-tight">
+        <motion.div variants={resolved} className="mb-5 flex items-center justify-between">
+          <h2 id="blog-heading" className="text-xl sm:text-2xl font-semibold tracking-tight">
             Writing
           </h2>
           <Link
@@ -61,51 +68,7 @@ export function BlogSection({ posts }: { posts: BlogPostMeta[] }) {
           </Link>
         </motion.div>
 
-        {/* Post list
-        <div
-          role="list"
-          className="divide-y divide-border border-y border-border"
-        >
-          {posts.map((post) => (
-            <motion.article
-              key={post.slug}
-              role="listitem"
-              variants={resolved}
-              className="group relative py-5"
-            >
-              Stretch link
-              <Link
-                href={`/blog/${post.slug}`}
-                className="after:absolute after:inset-0 after:content-['']"
-                aria-label={post.title}
-              >
-                <span className="sr-only">{post.title}</span>
-              </Link>
-
-              <div className="flex items-start justify-between gap-4">
-                <div className="space-y-1.5">
-                  <h3 className="text-sm font-medium text-foreground transition-colors group-hover:text-foreground/70">
-                    {post.title}
-                  </h3>
-                  <p className="line-clamp-1 text-sm text-muted-foreground">
-                    {post.description}
-                  </p>
-                </div>
-
-                <time
-                  dateTime={post.date}
-                  className="shrink-0 text-xs tabular-nums text-muted-foreground/50"
-                >
-                  {new Date(post.date).toLocaleDateString("en-US", {
-                    month: "short",
-                    year: "numeric",
-                  })}
-                </time>
-              </div>
-            </motion.article>
-          ))}
-        </div> */}
-        {/* Post grid */}
+        {/* Post list */}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           {posts.map((post) => (
             <motion.article
@@ -128,13 +91,7 @@ export function BlogSection({ posts }: { posts: BlogPostMeta[] }) {
 
               {/* Date + read time */}
               <div className="flex items-center gap-2 text-xs text-muted-foreground/50 tabular-nums">
-                <time dateTime={post.date}>
-                  {new Date(post.date).toLocaleDateString('en-US', {
-                    month: 'short',
-                    day: 'numeric',
-                    year: 'numeric',
-                  })}
-                </time>
+                <time dateTime={post.date}>{formatDate(post.date)}</time>
                 <span aria-hidden="true">·</span>
                 <span>{post.readingTime}</span>
               </div>

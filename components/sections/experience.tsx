@@ -24,7 +24,6 @@ const reducedVariants = {
 }
 
 interface ExperienceSectionProps {
-  /** Pass a number to limit entries (home page). Omit to show all (/work page). */
   limit?: number
 }
 
@@ -41,8 +40,8 @@ export function ExperienceSection({ limit }: ExperienceSectionProps) {
         whileInView="show"
         viewport={{ once: true, margin: '-80px' }}
       >
-        <div className="mb-6 flex items-center justify-between">
-          <h2 id="experience-heading" className="text-xl font-semibold tracking-tight">
+        <div className="mb-5 flex items-center justify-between">
+          <h2 id="experience-heading" className="text-xl sm:text-2xl font-semibold tracking-tight">
             Experience
           </h2>
           {limit && (
