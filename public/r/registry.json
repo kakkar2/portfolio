@@ -17,6 +17,36 @@
           "target": "components/ui/copy-button.tsx"
         }
       ]
+    },
+    {
+      "name": "package-manager-tabs",
+      "type": "registry:ui",
+      "title": "Package Manager Tabs",
+      "description": "A CLI command block with a package manager switcher. Supports npm, pnpm, yarn, and bun with per-manager commands and a one-click copy button.",
+      "dependencies": ["@iconify/react"],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/ui/package-manager-tabs.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/package-manager-tabs.tsx"
+        }
+      ]
+    },
+    {
+      "name": "share-menu",
+      "type": "registry:ui",
+      "title": "Share Menu",
+      "description": "A compact share popover with X, LinkedIn, and copy-link actions.",
+      "dependencies": [],
+      "registryDeps": ["popover", "separator"],
+      "files": [
+        {
+          "path": "registry/ui/share-menu.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/share-menu.tsx"
+        }
+      ]
     }
   ]
 }

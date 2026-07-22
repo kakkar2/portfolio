@@ -19,12 +19,23 @@ const NAV_LINKS = [
   { label: 'Resume', href: '/resume' },
 ] as const
 
+function ShortcutKey() {
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true)
+  }, [])
+
+  const isMac = mounted && navigator.platform.toLowerCase().includes('mac')
+
+  return <>{mounted && isMac ? '⌘' : 'Ctrl'}</>
+}
+
 export function Navbar() {
   const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-
-  const isMac = typeof window !== 'undefined' && navigator.platform.toLowerCase().includes('mac')
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16)
@@ -83,7 +94,10 @@ export function Navbar() {
           >
             <IconSearch size={17} aria-hidden="true" />
             <div className="flex items-center gap-1">
-              <Kbd className="hidden sm:inline-flex">{isMac ? '⌘' : 'Ctrl'}</Kbd>
+              <Kbd className="hidden sm:inline-flex">
+                {/* {isMac ? '⌘' : 'Ctrl'} */}
+                <ShortcutKey />
+              </Kbd>
               <Kbd className="hidden sm:inline-flex">K</Kbd>
             </div>
           </button>

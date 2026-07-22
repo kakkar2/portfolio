@@ -9,14 +9,19 @@ export type RegistryEntry = {
 
 const Demo0 = lazy(() => import('@/registry/examples/copy-button-demo'))
 const Demo1 = lazy(() => import('@/registry/examples/package-manager-tabs-demo'))
+const Demo2 = lazy(() => import('@/registry/examples/share-menu-demo'))
 
 export const Index: Record<string, RegistryEntry> = {
   'copy-button': {
     files: ['registry/ui/copy-button.tsx'],
     component: Demo0,
   },
-  'package-manger-tabs': {
-    files: [],
+  'package-manager-tabs': {
+    files: ['registry/ui/package-manager-tabs.tsx'],
     component: Demo1,
+  },
+  'share-menu': {
+    files: ['registry/ui/share-menu.tsx'],
+    component: Demo2,
   },
 }

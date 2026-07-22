@@ -57,6 +57,25 @@ export const componentProps: Record<string, PropRow[]> = {
       description: 'Additional classes for the root wrapper.',
     },
   ],
+  'share-menu': [
+    {
+      name: 'title',
+      type: 'string',
+      required: true,
+      description: 'Page title used as the share text on X and email subject.',
+    },
+    {
+      name: 'url',
+      type: 'string',
+      required: true,
+      description: 'URL to share. Encoded automatically for each target.',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional classes applied to the trigger button.',
+    },
+  ],
 }
 
 export function getRegistry() {

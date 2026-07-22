@@ -82,6 +82,11 @@
   --sidebar-ring: oklch(0.708 0 0);
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
+
+  --scrollbar-size: 4px;
+  --scrollbar-track: transparent;
+  --scrollbar-thumb: oklch(0.87 0 0);
+  --scrollbar-thumb-hover: oklch(0.72 0 0);
 }
 
 .dark {
@@ -116,6 +121,9 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+
+  --scrollbar-thumb: oklch(1 0 0 / 18%);
+  --scrollbar-thumb-hover: oklch(1 0 0 / 32%);
 }
 
 @layer base {
@@ -127,6 +135,27 @@
   }
   html {
     @apply font-sans;
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+  }
+
+  /* Chrome, Safari, Edge */
+  ::-webkit-scrollbar {
+    width: var(--scrollbar-size);
+    height: var(--scrollbar-size);
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover);
+  }
+  ::-webkit-scrollbar-corner {
+    background: transparent;
   }
 
   button:not(:disabled),
@@ -195,4 +224,6 @@
   --input: oklch(0.252 0 0);
   --ring: oklch(0.7214 0.1337 49.9802);
   --radius: 0.75rem;
+
+  --scrollbar-thumb: oklch(1 0 0 / 22%);
 }
