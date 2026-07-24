@@ -1,5 +1,6 @@
 import type { ComponentType } from 'react'
 
+// import { siteConfig } from '@/config/site'
 import { PreviewWrapper } from '../registry/preview-wrapper'
 import { DemoSlot } from './demo-slot'
 
@@ -7,6 +8,9 @@ type PreviewModule = { Preview: ComponentType }
 
 export async function ComponentPreview({ slug }: { slug: string }) {
   const demoSlot = <DemoSlot slug={slug} />
+
+  // const v0Url =
+  //   `https://v0.dev/chat/api/open?url=` + encodeURIComponent(`${siteConfig.url}/r/${slug}.json`)
 
   /* eslint-disable react-hooks/error-boundaries */
   try {

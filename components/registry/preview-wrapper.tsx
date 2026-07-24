@@ -1,6 +1,7 @@
 'use client'
 
-import { IconDeviceImac, IconTerminal2 } from '@tabler/icons-react'
+import { Icon } from '@iconify/react'
+import { IconDeviceImac, IconExternalLink, IconTerminal2 } from '@tabler/icons-react'
 import { useEffect, useState } from 'react'
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
@@ -10,9 +11,15 @@ interface PreviewWrapperProps {
   children: React.ReactNode
   demoSlot: React.ReactNode
   minHeight?: string
+  v0Url?: string
 }
 
-export function PreviewWrapper({ children, demoSlot, minHeight = '220px' }: PreviewWrapperProps) {
+export function PreviewWrapper({
+  children,
+  demoSlot,
+  minHeight = '220px',
+  v0Url,
+}: PreviewWrapperProps) {
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
@@ -22,22 +29,39 @@ export function PreviewWrapper({ children, demoSlot, minHeight = '220px' }: Prev
 
   return (
     <Tabs defaultValue="preview" className="w-full">
-      <TabsList className="mb-1 h-10 w-fit rounded-lg bg-muted p-1">
-        <TabsTrigger
-          value="preview"
-          className="flex items-center gap-1.5 h-8 rounded-md px-4 py-2 text-xs [&[data-state=active]]:bg-background [&[data-state=active]]:shadow-sm"
-        >
-          <IconDeviceImac size={13} aria-hidden="true" />
-          Preview
-        </TabsTrigger>
-        <TabsTrigger
-          value="code"
-          className="flex items-center gap-1.5 h-8 rounded-md px-4 py-2 text-xs [&[data-state=active]]:bg-background [&[data-state=active]]:shadow-sm"
-        >
-          <IconTerminal2 size={13} aria-hidden="true" />
-          Code
-        </TabsTrigger>
-      </TabsList>
+      <div className="mb-1 flex items-center justify-between">
+        <TabsList className="h-10 w-fit rounded-lg bg-muted p-1">
+          <TabsTrigger
+            value="preview"
+            className="flex items-center gap-1.5 h-8 rounded-md px-4 py-2 text-xs [&[data-state=active]]:bg-background [&[data-state=active]]:shadow-sm"
+          >
+            <IconDeviceImac size={13} aria-hidden="true" />
+            Preview
+          </TabsTrigger>
+          <TabsTrigger
+            value="code"
+            className="flex items-center gap-1.5 h-8 rounded-md px-4 py-2 text-xs [&[data-state=active]]:bg-background [&[data-state=active]]:shadow-sm"
+          >
+            <IconTerminal2 size={13} aria-hidden="true" />
+            Code
+          </TabsTrigger>
+        </TabsList>
+
+        {v0Url && (
+          <a
+            href={v0Url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={cn(
+              'flex items-center gap-1.5 rounded-lg border border-border px-3 py-1.5',
+              'text-xs text-muted-foreground transition-colors',
+              'hover:border-foreground/20 hover:bg-accent hover:text-foreground'
+            )}
+          >
+            <Icon icon="simple-icons:v0" className="size-6" aria-hidden="true" />
+          </a>
+        )}
+      </div>
 
       <TabsContent value="preview" className="mt-0">
         {mounted ? (

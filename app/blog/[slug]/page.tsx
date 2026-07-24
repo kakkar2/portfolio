@@ -6,6 +6,8 @@ import { notFound } from 'next/navigation'
 
 import { mdxComponents } from '@/components/mdx/mdx-components'
 import { buttonVariants } from '@/components/ui/button'
+import { ShareMenu } from '@/components/ui/share-menu'
+import { siteConfig } from '@/config/site'
 import { getBlogPost, getBlogPosts } from '@/lib/mdx'
 import { cn } from '@/lib/utils'
 
@@ -34,19 +36,28 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const post = getBlogPost(slug)
   if (!post) notFound()
 
+  const shareUrl = `${siteConfig.url}/blog/${slug}`
+
   return (
     <main className="container mx-auto max-w-3xl px-5 sm:px-6 lg:px-8 pt-24 pb-24">
-      {/* Back link */}
-      <Link
-        href="/blog"
-        className={cn(
-          buttonVariants({ variant: 'ghost', size: 'sm' }),
-          '-ml-3 mb-10 gap-1.5 text-muted-foreground hover:text-foreground'
-        )}
-      >
-        <IconArrowLeft size={14} aria-hidden="true" />
-        Back to blog
-      </Link>
+      <div className="flex items-center justify-between mb-10 gap-4">
+        <Link
+          href="/blog"
+          className={cn(
+            buttonVariants({ variant: 'ghost', size: 'sm' }),
+            '-ml-3 gap-1.5 text-muted-foreground hover:text-foreground'
+          )}
+        >
+          <IconArrowLeft size={14} aria-hidden="true" />
+          Back to blog
+        </Link>
+
+        <ShareMenu
+          title={post.title}
+          url={shareUrl}
+          className="-mr-2 shrink-0 text-muted-foreground hover:text-foreground"
+        />
+      </div>
 
       {/* Header */}
       <header className="mb-10 space-y-4">
@@ -95,19 +106,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       >
         <MDXRemote source={post.content} components={mdxComponents} />
       </article>
-      {/* <article
-        className={cn(
-          "prose prose-sm sm:prose max-w-none dark:prose-invert",
-          "prose-headings:font-semibold prose-headings:tracking-tight",
-          "prose-a:text-foreground prose-a:underline-offset-4",
-          "prose-code:rounded prose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5",
-          "prose-code:text-foreground prose-code:font-mono prose-code:text-[0.85em]",
-          "prose-code:before:content-none prose-code:after:content-none",
-          "prose-pre:border prose-pre:border-border prose-pre:bg-muted/50",
-        )}
-      >
-        <MDXRemote source={post.content} components={mdxComponents} />
-      </article> */}
     </main>
   )
 }

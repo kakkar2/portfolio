@@ -27,7 +27,7 @@ const SHARE_TARGETS: ShareTarget[] = [
     label: 'Share on X',
     icon: IconBrandX,
     href: (title, url) =>
-      `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`,
+      `https://x.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`,
   },
   {
     id: 'linkedin',
@@ -38,7 +38,7 @@ const SHARE_TARGETS: ShareTarget[] = [
 ]
 
 const itemCls = cn(
-  'flex w-full items-center gap-2.5 rounded-md px-2.5 py-2',
+  'flex w-full items-center gap-2 rounded-md px-2 py-1.5',
   'text-sm text-muted-foreground transition-colors',
   'hover:bg-accent hover:text-foreground'
 )
