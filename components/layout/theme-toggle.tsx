@@ -69,7 +69,7 @@ export function ThemeToggle() {
                 transition={{ duration: 0.2, ease: 'easeInOut' }}
                 className="absolute"
               >
-                <IconSun className="size-4.5" aria-hidden="true" />
+                <IconSun className="size-4.5" fill="currentColor" aria-hidden="true" />
               </motion.span>
             ) : (
               <motion.span
@@ -80,7 +80,7 @@ export function ThemeToggle() {
                 transition={{ duration: 0.2, ease: 'easeInOut' }}
                 className="absolute"
               >
-                <IconMoon className="size-4.5" aria-hidden="true" />
+                <IconMoon className="size-4.5" fill="currentColor" aria-hidden="true" />
               </motion.span>
             )}
           </AnimatePresence>

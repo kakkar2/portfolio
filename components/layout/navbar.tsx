@@ -60,33 +60,36 @@ export function Navbar() {
         {/* Logo */}
         <NavbarLogo />
 
-        {/* Desktop nav */}
-        <nav aria-label="Main navigation" className="hidden sm:block">
-          <ul className="flex items-center gap-1" role="list">
-            {NAV_LINKS.map(({ label, href }) => {
-              const isActive = pathname === href || pathname.startsWith(`${href}/`)
-              return (
-                <li key={href}>
-                  <Link
-                    href={href}
-                    aria-current={isActive ? 'page' : undefined}
-                    className={cn(
-                      'rounded-md px-3 py-1.5 text-sm transition-colors',
-                      isActive
-                        ? 'font-medium text-foreground'
-                        : 'text-muted-foreground hover:text-foreground'
-                    )}
-                  >
-                    {label}
-                  </Link>
-                </li>
-              )
-            })}
-          </ul>
-        </nav>
-
         {/* Right side */}
         <div className="flex items-center gap-1">
+          {/* Desktop nav */}
+          <nav aria-label="Main navigation" className="hidden sm:block">
+            <ul className="flex items-center gap-1" role="list">
+              {NAV_LINKS.map(({ label, href }) => {
+                const isActive = pathname === href || pathname.startsWith(`${href}/`)
+                return (
+                  <li key={href}>
+                    <Link
+                      href={href}
+                      aria-current={isActive ? 'page' : undefined}
+                      className={cn(
+                        'rounded-md px-3 py-1.5 text-sm transition-colors',
+                        isActive
+                          ? 'font-medium text-foreground'
+                          : 'text-muted-foreground hover:text-foreground'
+                      )}
+                    >
+                      {label}
+                    </Link>
+                  </li>
+                )
+              })}
+            </ul>
+          </nav>
+
+          {/* Separator */}
+          <div className="mx-1 hidden h-4 w-px bg-border sm:block" aria-hidden="true" />
+
           <button
             onClick={() => window.dispatchEvent(new Event('lalit:search-open'))}
             aria-label="Open search (Cmd+K)"
