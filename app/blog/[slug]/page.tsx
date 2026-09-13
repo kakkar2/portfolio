@@ -95,6 +95,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
       {/* MDX content */}
       <article
+        id="blog-article"
         className={cn(
           'prose prose-sm sm:prose max-w-none dark:prose-invert',
           'prose-headings:font-semibold prose-headings:tracking-tight',

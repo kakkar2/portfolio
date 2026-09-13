@@ -55,8 +55,8 @@ export function ShareMenu({ title, url, className }: ShareMenuProps) {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="ghost" size="icon" aria-label="Share" className={cn('size-9', className)}>
-          <IconShare2 size={16} aria-hidden="true" />
+        <Button variant="ghost" size="icon" aria-label="Share" className={cn('size-12', className)}>
+          <IconShare2 size={20} aria-hidden="true" />
         </Button>
       </PopoverTrigger>
 

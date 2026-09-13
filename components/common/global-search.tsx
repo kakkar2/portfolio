@@ -1,4 +1,3 @@
-import { getAllComponentMeta } from '@/lib/components-content'
 import { getBlogPosts } from '@/lib/mdx'
 
 import { GlobalSearchCommand, type SearchItem } from './global-search-command'
@@ -9,13 +8,6 @@ const PAGE_ITEMS: SearchItem[] = [
     title: 'Projects',
     description: 'Things I have built',
     href: '/projects',
-    category: 'page',
-  },
-  {
-    id: 'page-components',
-    title: 'Components',
-    description: 'Open-source component registry',
-    href: '/components',
     category: 'page',
   },
   {
@@ -35,17 +27,7 @@ const PAGE_ITEMS: SearchItem[] = [
 ]
 
 export function GlobalSearch() {
-  const components = getAllComponentMeta()
   const posts = getBlogPosts()
-
-  const componentItems: SearchItem[] = components.map((c) => ({
-    id: `component-${c.slug}`,
-    title: c.title,
-    description: c.description,
-    href: `/components/${c.slug}`,
-    category: 'component',
-    tags: c.tags,
-  }))
 
   const blogItems: SearchItem[] = posts.map((p) => ({
     id: `blog-${p.slug}`,
@@ -56,5 +38,5 @@ export function GlobalSearch() {
     tags: p.tags,
   }))
 
-  return <GlobalSearchCommand items={[...PAGE_ITEMS, ...componentItems, ...blogItems]} />
+  return <GlobalSearchCommand items={[...PAGE_ITEMS, ...blogItems]} />
 }

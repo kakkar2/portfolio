@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This repository is a personal portfolio website built with Next.js 16 and TypeScript. It uses the Next App Router and Tailwind CSS v4 as the styling foundation. The site is content-driven with static data files, MDX-based blog posts, and a small component registry powered by file-system metadata.
+This repository is a personal portfolio website built with Next.js 16 and TypeScript, for a design engineer. It uses the Next App Router and Tailwind CSS v4 as the styling foundation. The site is content-driven with static data files and MDX-based blog posts.
 
 Key architectural characteristics:
 
@@ -10,7 +10,6 @@ Key architectural characteristics:
 - Static content driven by `data/`, `content/`, and `config/site.ts`
 - Server and client component split using `use client`
 - Theme support via `next-themes` and custom theme presets
-- Custom registry generator supporting lazy-loaded component demos
 - SEO-first metadata, sitemap, robots, RSS, and OG image generation
 
 ## High-level Architecture
@@ -36,8 +35,6 @@ flowchart LR
   F --> G[sections/*]
   F --> H[data/*]
   F --> I[content/blog/*.mdx]
-  F --> J[content/components/*.mdx]
-  J --> K[scripts/build-index.ts]
 ```
 
 ## Folder Structure Explanation
@@ -47,8 +44,6 @@ flowchart LR
   - `app/projects/page.tsx` - Projects listing.
   - `app/blog/page.tsx` - Blog index.
   - `app/blog/[slug]/page.tsx` - Blog post page.
-  - `app/components/page.tsx` - Component registry index.
-  - `app/components/[slug]/page.tsx` - Component detail page.
   - `app/robots.ts` - robots metadata route.
   - `app/sitemap.ts` - sitemap metadata route.
   - `app/blog/feed.xml/route.ts` - RSS feed route.
@@ -60,33 +55,23 @@ flowchart LR
   - `components/sections/` - Page sections used by home and route pages.
   - `components/ui/` - Styled shadcn/ui and Radix wrapper primitives.
   - `components/providers/` - application-level client providers.
-  - `components/registry/` - registry preview and documentation UI.
-  - `components/common/` - shared utility components like `RoleFlip`.
+  - `components/mdx/` - MDX rendering primitives used by the blog (`MdxPre`, `HighlightedCode`, `mdxComponents`).
+  - `components/common/` - shared utility components like `RoleFlip` and global search.
 
 - `config/` - Global site configuration.
   - `config/site.ts` contains `siteConfig` and JSON-LD schema.
 
 - `data/` - Typed static data used by pages and components.
-  - `experience.ts`, `projects.ts`, `stack.ts`, `theme-presets.ts`, `social-links.ts`, `toc-items.ts`, `registry.ts`
+  - `experience.ts`, `projects.ts`, `stack.ts`, `theme-presets.ts`, `social-links.ts`, `toc-items.ts`, `uses.ts`
 
 - `content/` - Markdown/MDX content source.
   - `content/blog/*.mdx` for blog posts.
-  - `content/components/*.mdx` for registry component metadata.
 
 - `lib/` - Utility libraries and content parsers.
   - `lib/mdx.ts` - blog post loader and metadata parser.
-  - `lib/components-content.ts` - component metadata and usage extraction.
   - `lib/utils.ts` - `cn` helper.
-  - `lib/rehype-component.ts` - MDX rehype plugin for inline component previews.
 
-- `registry/` - Component demo source and UI source templates.
-  - `registry/examples/` - lazy-loaded demo entry points.
-  - `registry/ui/` - optional UI source files associated with demos.
-
-- `scripts/` - Build utilities.
-  - `scripts/build-index.ts` generates `components/registry/index.tsx`.
-
-- `public/` - Static assets and JSON files.
+- `public/` - Static assets.
 
 ## Application Flow
 
@@ -99,10 +84,9 @@ flowchart LR
 
 ## Routing Architecture
 
-- Static top-level routes: `/`, `/projects`, `/blog`, `/components`, `/resume`, `/work`.
+- Static top-level routes: `/`, `/work`, `/projects`, `/blog`, `/resume`.
 - Dynamic routes:
   - `/blog/[slug]` for blog posts.
-  - `/components/[slug]` for registry component details.
 - Metadata-only routes:
   - `/robots.txt` provided by `app/robots.ts`.
   - `/sitemap.xml` provided by `app/sitemap.ts`.
@@ -110,13 +94,12 @@ flowchart LR
 - OG image routes:
   - `/opengraph-image` for the home page.
   - `/blog/opengraph-image` and `/blog/[slug]/opengraph-image`.
-  - `/components/[slug]/opengraph-image`.
 - API route:
   - `/api/npm-stats` returns download counts from npm.
 
 ## Component Architecture
 
-The repository uses a clear separation between layout, sections, UI primitives, providers, and registry components.
+The repository uses a clear separation between layout, sections, UI primitives, and providers.
 
 ### Layout Components
 
@@ -134,7 +117,7 @@ The repository uses a clear separation between layout, sections, UI primitives, 
 
 - `Button` uses `cva` and Radix `Slot`.
 - `Tabs`, `Tooltip`, `HoverCard`, `Collapsible` wrap Radix primitives.
-- `CopyButton`, `ThemeToggle`, `PreviewWrapper` provide reusable interactions.
+- `CopyButton`, `ThemeToggle` provide reusable interactions.
 - `cn()` is the shared classname helper using `clsx` and `tailwind-merge`.
 
 ## State Management Approach
@@ -150,9 +133,7 @@ The repository uses a clear separation between layout, sections, UI primitives, 
 
 - Static site data flows from `data/` and `config/site.ts` into server components.
 - Blog content is loaded with `lib/mdx.ts` by reading `content/blog/*.mdx` and parsing frontmatter.
-- Component registry metadata is loaded by `lib/components-content.ts` from `content/components/*.mdx`.
-- `scripts/build-index.ts` scans registry example and UI directories to generate a lazy imports index.
-- `getBlogPosts`, `getBlogPost`, `getRegistry`, and `getComponentContent` are the main server-side data entry points.
+- `getBlogPosts` and `getBlogPost` are the main server-side data entry points.
 
 ## Server vs Client Component Strategy
 
@@ -166,7 +147,7 @@ The repository uses a clear separation between layout, sections, UI primitives, 
   - `components/providers/theme-preset-provider.tsx`
   - `components/ui/` primitives that wrap Radix UI
   - `components/sections/hero.tsx`, `projects.tsx`, `blog.tsx`, `experience.tsx`, `stack.tsx`, `contact.tsx`
-- Server components are used for route pages and content-heavy pages where no client-side interactivity is required, such as `app/page.tsx`, `app/blog/page.tsx`, and `app/components/page.tsx`.
+- Server components are used for route pages and content-heavy pages where no client-side interactivity is required, such as `app/page.tsx` and `app/blog/page.tsx`.
 
 ## API Architecture
 
@@ -174,25 +155,12 @@ The repository uses a clear separation between layout, sections, UI primitives, 
 - It validates the `pkg` query parameter and fetches npm download counts using the NPM downloads API.
 - Caching is handled with `next: { revalidate: 3600 }` inside the fetch.
 
-## Registry Architecture
-
-The component registry is implemented as a file-system-driven content registry:
-
-- `content/components/*.mdx` holds metadata for each registry component.
-- `registry/examples/*.tsx` contains lazy-loaded demo implementations for previews.
-- `registry/ui/*.tsx` contains optional source helper files.
-- `scripts/build-index.ts` scans the registry directories and writes `components/registry/index.tsx`.
-- `data/registry.ts` exposes `getRegistry()` and `getComponent()` wrappers.
-- `app/components/[slug]/page.tsx` uses `getComponentContent()` and lazy/dynamic loading for heavy UI.
-- `lib/rehype-component.ts` can embed demo source within MDX if called from content workflows.
-
 ## Build and Deployment Flow
 
 ### Build
 
 - `npm install`
 - `npm run build` → `next build`
-- `npm run registry:index` can be used to regenerate the registry index before build.
 
 ### Deployment
 
@@ -209,9 +177,8 @@ The component registry is implemented as a file-system-driven content registry:
 - `tailwindcss@4`
 - `next-themes` for theme switching
 - `@vercel/analytics`, `@vercel/og`, `@vercel/speed-insights`
-- `shadcn` for UI scaffolding and Tailwind integration
 - `framer-motion` for animation
-- `gray-matter`, `reading-time`, `next-mdx-remote` for MDX content
+- `gray-matter`, `reading-time`, `next-mdx-remote`, `shiki` for MDX blog content and syntax highlighting
 - `class-variance-authority`, `clsx`, `tailwind-merge`
 - `radix-ui` packages for accessible primitives
 - `@tabler/icons-react` and `@iconify/react`
@@ -225,10 +192,6 @@ The component registry is implemented as a file-system-driven content registry:
 
 ## Performance Optimizations Currently Implemented
 
-- Dynamic import of heavy client-only components in `app/components/[slug]/page.tsx`:
-  - `InstallTabs`
-  - `ExpandableCode`
-- Lazy-loaded registry demos via `components/registry/index.tsx`.
 - `useReducedMotion()` gating for Framer Motion animations.
 - `suppressHydrationWarning` in `<html>` and `<body>` to avoid mismatch warnings.
 - `next-themes` hydration-safe theme handling.
@@ -242,7 +205,7 @@ The component registry is implemented as a file-system-driven content registry:
 - `metadataBase`, title templates, Open Graph, Twitter card, and authors are defined.
 - JSON-LD Person schema is injected in the root `<head>` via `config/site.ts`.
 - Route metadata pages include `robots.ts`, `sitemap.ts`, and `feed.xml`.
-- Dynamic OG images are generated by `@vercel/og` in `app/opengraph-image.tsx`, `app/blog/[slug]/opengraph-image.tsx`, and `app/components/[slug]/opengraph-image.tsx`.
+- Dynamic OG images are generated by `@vercel/og` in `app/opengraph-image.tsx` and `app/blog/[slug]/opengraph-image.tsx`.
 - The blog index uses semantic headings and linkable article cards.
 
 ## Security Considerations
@@ -256,8 +219,6 @@ The component registry is implemented as a file-system-driven content registry:
 ## Future Scaling Considerations
 
 - Add new blog posts by dropping MDX into `content/blog/`.
-- Add new registry components by creating `content/components/*.mdx` and `registry/examples/*-demo.tsx`.
-- `scripts/build-index.ts` can be extended to include additional registry metadata.
 - Adding routes should follow the App Router / `app/` conventions with metadata and consistent layout.
 - Avoid large client-side state libraries; keep the site lightweight and static-first.
 - Additional analytics or runtime features should be introduced as separate client components or edge routes.

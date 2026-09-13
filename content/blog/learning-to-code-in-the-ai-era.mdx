@@ -1,0 +1,52 @@
+---
+title: 'What to actually learn as a developer when AI writes the code'
+description: 'AI has taken over most of the typing. Here is what I think is actually worth learning now, and what I have quietly stopped worrying about.'
+date: '2026-09-13'
+tags: ['ai', 'career', 'learning', 'software-engineering']
+---
+
+A few years ago, being a strong developer basically meant knowing your language cold: syntax, standard library, all the idioms. Now I can describe a feature in a sentence and have a working first draft before I've finished my coffee. The typing part of the job is mostly solved, honestly, and I don't think most of us have caught up on what that means for how we should be spending our time.
+
+Anyway. Here's roughly how I think about it.
+
+## Where AI is actually good
+
+It's really good at the part of programming that used to eat the most hours, turning a clear spec into working code. Boilerplate, CRUD endpoints, standard UI patterns, glue code between two APIs, that kind of thing. It gets through all of that fast, and usually correctly on the first pass, which honestly still feels a little unfair some days.
+
+Where it falls apart is the part senior developers used to do almost without thinking about it. Figuring out what the right solution even is. Noticing when something that "works" is actually wrong in a way that'll bite you in three weeks. Knowing when to throw the approach out instead of pushing it further.
+
+So the hard part of the job didn't go away, it just moved somewhere else.
+
+## What I think actually matters now
+
+Reading code fast, and reading it like you don't trust it, is probably the big one. You'll spend more time reviewing generated code than writing your own from scratch these days, so a skill that used to be kind of optional (glancing at someone's diff and forming a real opinion about it) is now something you're doing constantly. If you can't sit with a 200-line diff and find the fragile part in a couple minutes, that's the part that ships.
+
+Then there's fundamentals, and I mean the kind that let you judge whether something's correct, not just whether it compiles. AI-generated code tends to be syntactically clean and quietly wrong. An off-by-one in a pagination cursor. A query that's fine at 100 rows and falls over at 100,000. A race condition between two writes that only shows up under load, three months after you shipped it. None of that trips a linter. Catching it takes the same fundamentals it always did, data structures, what your database is actually doing under a query, what can go sideways with concurrent access, except now you need them for review, not just for writing things from scratch.
+
+```ts
+// looks fine, ships fine, falls over under load
+async function reserveSeat(seatId: string) {
+  const seat = await db.seat.findUnique({ where: { id: seatId } })
+  if (seat.status === 'available') {
+    await db.seat.update({ where: { id: seatId }, data: { status: 'reserved' } })
+  }
+}
+```
+
+An AI will hand you this without blinking. It reads fine. It probably passes review if you're skimming. But it's a textbook check-then-act race condition, and the second two requests land close together you've double-booked a seat. Catching that has nothing to do with how you phrased the prompt. It's just knowing what a race condition looks like when you see one.
+
+System-level thinking matters more too, mostly because AI only knows what you tell it and nothing else. It has no idea the caching layer you bolted on last month means this new write path needs to invalidate a key somewhere. It doesn't know three other services are quietly depending on how this endpoint behaves today. Keeping the shape of the whole system in your head, and knowing which parts of a change are going to ripple outward, is still very much on you. That's basically the whole difference between "the AI wrote a feature" and "the AI wrote a feature that didn't break two other ones on the way out."
+
+Debugging from first principles hasn't gone anywhere either, and honestly I don't think it ever will. When something breaks in a way that isn't obvious from the stack trace, no amount of clever prompting gets you there faster than just sitting down and reasoning through state, timing, and what the system actually did versus what you expected. Barely changed in a decade, this one, if anything it matters more now, since the code breaking on you is increasingly code you didn't write yourself.
+
+And being precise when you communicate matters more than I expected it to. Turns out "prompting" is mostly just describing a problem clearly, what the constraints are, what the edge cases are, what "done" looks like. Which, sure, was already a useful skill for writing tickets and reviewing PRs long before any of this. It just picked up a second job.
+
+## What I've quietly stopped worrying about
+
+Memorizing library APIs across five languages. Typing speed. Knowing every obscure config flag for every tool by heart. None of that's useless exactly, it's just not where the payoff is anymore, and every hour spent drilling that stuff is an hour not spent getting better at the things above.
+
+## The uncomfortable bit
+
+Here's the thing though, the skills that matter more now (system design, debugging, judgment, reading code like a skeptic) are also the ones you can't really build by watching AI write code for you. You get them from having been wrong before. From shipping the check-then-act bug and owning what happened next. From debugging a race condition at 2am and actually figuring out why. From staying on a system long enough that you feel it in your gut when it's under-designed, before you can even explain why.
+
+Which means if you let AI write everything and skip the parts that build that judgment, you're probably getting worse at this job even while you look like you're shipping faster. Getting better still looks a lot like it always did, review things properly, ask why something works instead of just checking that it does, stay curious about systems you didn't personally write. The tools changed a lot. What makes someone actually good at this, not so much.

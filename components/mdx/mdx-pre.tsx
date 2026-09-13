@@ -1,6 +1,6 @@
 import type { ComponentProps } from 'react'
 
-import { HighlightedCode } from '@/components/registry/highlighted-code'
+import { HighlightedCode } from '@/components/mdx/highlighted-code'
 import { CopyButton } from '@/components/ui/copy-button'
 
 type PreProps = ComponentProps<'pre'> & {
@@ -9,7 +9,7 @@ type PreProps = ComponentProps<'pre'> & {
 
 const NO_COPY_LANGS = new Set(['text', 'txt'])
 
-export async function MdxPre({ children, ...props }: PreProps) {
+export async function MdxPre({ children }: PreProps) {
   const code = children?.props?.children ?? ''
   const langClass = children?.props?.className ?? ''
   const lang = langClass.replace('language-', '') || 'bash'

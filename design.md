@@ -2,7 +2,7 @@
 
 ## Design Philosophy
 
-The site is designed as a clean developer portfolio with a strong emphasis on readability, accessibility, and lightweight motion. It uses a monochrome-first palette with subtle accent states and dev-centric UI patterns.
+The site is designed as a clean design-engineer portfolio with a strong emphasis on readability, accessibility, and lightweight motion. It uses a monochrome-first palette with subtle accent states and dev-centric UI patterns.
 
 Core principles:
 
@@ -22,7 +22,7 @@ The layout is anchored by a centered container pattern across pages:
 - Section spacing uses `py-6`, `mb-10` and other Tailwind spacing utilities
 - Page-specific content is wrapped in `main` with `pt-24` to offset the fixed navbar
 
-Layout is intentionally narrow for readability and developer-focused content.
+Layout is intentionally narrow for readability and content-focused presentation.
 
 ## Typography System
 
@@ -79,7 +79,6 @@ These primitives expose consistent `className` and variant patterns.
 
 - `cn()` for class name composition and deduping
 - `buttonVariants` for button style consistency
-- `PreviewWrapper` for component demo/code split view
 - `CopyButton` for clipboard interactions with tooltip state
 - Data-driven sections that consume typed static data
 
@@ -138,10 +137,9 @@ The project maintains consistency through:
 - Use motion containers with `whileInView="show"`
 - Use `buttonVariants` for links and CTA buttons
 
-### Registry / preview components
+### MDX / code patterns
 
-- Use `PreviewWrapper` and tabs for preview/code toggling
-- Use `HighlightedCode` with Shiki for syntax highlighting
+- `MdxPre` renders fenced code blocks in blog posts via `HighlightedCode` (Shiki, `one-light` / `one-dark-pro` themes)
 - Use `CopyButton` in code blocks and CLI snippets
 
 ### Theme components
@@ -171,12 +169,11 @@ Everything is styled using Tailwind CSS with custom global tokens:
 
 ## shadcn/ui Integration Details
 
-The project uses shadcn/ui patterns and Radix primitives.
+The project uses shadcn/ui patterns and Radix primitives for its own UI primitives.
 
 - `components/ui/` contains shadcn-style wrappers.
 - `app/globals.css` imports `shadcn/tailwind.css`.
-- Registry instructions and component pages reference shadcn CLI install paths.
-- `InstallTabs` provides tailored install instructions that match the shadcn workflow.
+- `components.json` configures the shadcn CLI for pulling in new primitives (e.g. `npx shadcn add <primitive>`) — this project does not publish its own component registry.
 
 ### Actual shadcn patterns in use
 

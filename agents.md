@@ -2,7 +2,7 @@
 
 ## Project Purpose
 
-This repository is a personal portfolio website for a software engineer. It doubles as a content site, project showcase, and a small open-source component registry.
+This repository is a personal portfolio website. It showcases work, writing, and experience — there is no component registry or component showcase in this codebase.
 
 ## Tech Stack
 
@@ -19,19 +19,16 @@ This repository is a personal portfolio website for a software engineer. It doub
 ## Folder Conventions
 
 - `app/` → route-level pages and metadata.
-- `components/` → reusable UI, layout, sections, providers, registry preview components.
 - `config/` → global site data.
 - `data/` → typed static content consumed by pages.
-- `content/` → MDX content sources.
+- `content/` → MDX blog content sources.
 - `lib/` → parsers and shared utilities.
-- `registry/` → component demo and UI source files.
-- `scripts/` → generation scripts.
 
 ## Naming Conventions
 
 - Components: PascalCase file names and exported components.
 - Files and folders: kebab-case for pages, data files, and MDX slugs.
-- Route slugs: `blog/[slug]`, `components/[slug]`.
+- Route slugs: `blog/[slug]`.
 - CSS variables: `--background`, `--foreground`, `--border`, etc.
 - Data arrays and objects: `siteConfig`, `projects`, `stack`, `experience`.
 
@@ -69,18 +66,9 @@ This repository is a personal portfolio website for a software engineer. It doub
 - Avoid inline CSS except in OG image generation or very small layout adjustments.
 - Add new theme-safe colors through CSS variables rather than hard-coded values.
 
-## Registry Component Rules
-
-- Add registry metadata as MDX in `content/components/*.mdx`.
-- Add demo code under `registry/examples/*-demo.tsx`.
-- If a registry component has related UI source, place it in `registry/ui/*.tsx`.
-- Run `npm run registry:index` when a registry component or example is added/removed.
-- Use `getComponentContent()` and `getComponentMeta()` from `lib/components-content.ts`.
-- Keep the registry page data-driven and use `dynamic()` imports for client-heavy presentation.
-
 ## Performance Requirements
 
-- Use dynamic imports for heavy client code, especially in page detail routes.
+- Use dynamic imports for heavy client code.
 - Use `useReducedMotion()` when animating.
 - Avoid unnecessary client hydration in server components.
 - Keep JS bundles small by leveraging static rendering and lazy loading.
@@ -120,11 +108,10 @@ This repository is a personal portfolio website for a software engineer. It doub
 
 ## Common Pitfalls
 
-- Do not copy generated registry files manually; use `scripts/build-index.ts`.
 - Avoid adding `use client` to components that do not require browser-only behavior.
 - Do not use unsupported Tailwind v4 classes or utilities outside the current theme tokens.
 - Do not assume a global CSS file beyond `app/globals.css`.
-- MDX content must have valid frontmatter and expected headings if you rely on `lib/components-content.ts` extraction.
+- MDX blog content must have valid frontmatter and expected headings, since `lib/mdx.ts` relies on it.
 
 ## Existing Patterns That Must Be Followed
 

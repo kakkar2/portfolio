@@ -30,8 +30,6 @@ const reducedItemVariants = {
 }
 
 interface ProjectsSectionProps {
-  /** true  → home page, shows featured only + "View all" link
-   *  false → /projects page, shows everything */
   featured?: boolean
 }
 

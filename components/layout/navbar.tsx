@@ -14,7 +14,6 @@ import { NavbarLogo } from './navbar-logo'
 
 const NAV_LINKS = [
   { label: 'Projects', href: '/projects' },
-  { label: 'Components', href: '/components' },
   { label: 'Blog', href: '/blog' },
   { label: 'Resume', href: '/resume' },
 ] as const
@@ -98,7 +97,6 @@ export function Navbar() {
             <IconSearch size={17} aria-hidden="true" />
             <div className="flex items-center gap-1">
               <Kbd className="hidden sm:inline-flex">
-                {/* {isMac ? '⌘' : 'Ctrl'} */}
                 <ShortcutKey />
               </Kbd>
               <Kbd className="hidden sm:inline-flex">K</Kbd>

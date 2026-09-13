@@ -31,7 +31,6 @@ export function WorkExperience({ className, experiences }: WorkExperienceProps) 
 }
 
 // ─── Company row
-
 function ExperienceItem({ experience }: { experience: ExperienceItem }) {
   return (
     <div className="space-y-4 py-4">

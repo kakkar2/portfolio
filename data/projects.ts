@@ -53,7 +53,7 @@ export const projects: Project[] = [
     links: {
       // github: "https://github.com/kakkar2/blog-platform",
     },
-    featured: true,
+    featured: false,
     type: 'personal',
   },
 ]
