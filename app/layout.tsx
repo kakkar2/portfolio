@@ -98,7 +98,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <TooltipProvider>
               <GlobalSearch />
               <Navbar />
-              {/* <ContentRails /> */}
               {children}
               <Footer />
               <Analytics />

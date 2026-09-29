@@ -5,12 +5,12 @@ import { siteConfig } from '@/config/site'
 
 export function Footer() {
   return (
-    <footer className="border-t border-border py-6">
-      <div className="container mx-auto max-w-3xl px-5 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
+    <footer className="relative isolate overflow-hidden border-t border-border">
+      <div className="container relative mx-auto flex max-w-3xl flex-col justify-between px-5 py-6 sm:px-6 lg:px-8">
+        <div className="flex flex-col-reverse items-start justify-between gap-3 sm:flex-row sm:items-center sm:gap-4">
           <p className="text-xs text-muted-foreground/50 group">
-            &copy; {new Date().getFullYear()} Designed and built by{' '}
-            <span className="text-muted-foreground group-hover:text-primary transition-colors duration-200">
+            &copy; {new Date().getFullYear()} Built by{' '}
+            <span className="text-muted-foreground group-hover:text-primary transition-colors duration-200 cursor-pointer">
               {siteConfig.name}
             </span>
             {' · '}

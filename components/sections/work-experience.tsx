@@ -73,8 +73,9 @@ function ExperienceItem({ experience }: { experience: ExperienceItem }) {
         )}
       </div>
 
-      {/* Positions — vertical line on the left */}
-      <div className="relative space-y-4 before:absolute before:left-3 before:h-full before:w-px before:bg-border">
+      {/* Positions — dashed vertical rail on the left */}
+      <div className="relative space-y-4">
+        <Separator variant="rail" orientation="vertical" className="absolute top-0 left-3 h-full" />
         {experience.positions.map((position) => (
           <ExperiencePositionItem key={position.id} position={position} />
         ))}

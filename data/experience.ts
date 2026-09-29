@@ -34,25 +34,26 @@ export const experiences: ExperienceItem[] = [
         employmentType: 'Full-time',
         isExpanded: true,
         description: `
-- Led frontend development for an AI-based career counseling platform, implementing dynamic user flows, session management, and personalized user journeys.
-- Designed a unified frontend architecture enabling seamless switching between multiple internal products while maintaining consistent UI/UX and shared layouts.
-- Built reusable components and custom hooks, reducing development time and improving code maintainability across projects.
-- Implemented secure authentication and role-based authorization using JWT, protecting sensitive routes and user data.
-- Integrated cloud-based image upload and storage solutions (S3 Bucket), improving media handling efficiency.
-- Collaborated closely with backend teams for REST API integration, ensuring reliable data flow and consistent application behavior.
+- Built the frontend of an AI career-counseling platform where users can pause and resume assessments; the same approach was reused across other internal products.
+- Led the rollout of role-based access control for 5 user roles, fixing unprotected routes and setting clear permission rules across the platform.
+- Designed the role-management API and wrote its documentation, helping the frontend team integrate roles and permissions faster.
+- Combined scattered data-fetching code into one reusable layer with automatic token handling, reducing repeated bugs and speeding up feature work.
+- Integrated cloud-based image upload and storage using S3, improving media handling.
         `.trim(),
         skills: [
           'React.js',
-          'Node.js',
-          'MongoDB',
+          'Next.js',
           'TypeScript',
+          'Node.js',
           'Express.js',
-          'JWT',
+          'MongoDB',
           'PostgreSQL',
-          'S3 Bucket',
+          'JWT',
           'REST APIs',
+          'Zustand',
           'Redux Toolkit',
           'TanStack Query',
+          'S3 Bucket',
         ],
       },
       {
@@ -61,10 +62,19 @@ export const experiences: ExperienceItem[] = [
         employmentPeriod: { start: '06.2024', end: '12.2024' },
         employmentType: 'Full-time',
         description: `
-- Developed scalable client-facing applications using React and MongoDB, ensuring responsive UI and high performance across devices.
-- Built reusable UI components and optimized performance using code splitting and lazy loading, improving initial load time and user experience.
+- Improved app loading speed using code splitting, Suspense streaming, and WebP images, raising Lighthouse performance from 23 to ~70.
+- Built smooth page transitions and animations for a landing page and 4 supporting pages.
+- Built reusable UI components that kept the interface consistent and sped up development across projects.
         `.trim(),
-        skills: ['React.js', 'TypeScript', 'TailwindCSS', 'Redux Toolkit', 'REST APIs'],
+        skills: [
+          'React.js',
+          'Next.js',
+          'TypeScript',
+          'TailwindCSS',
+          'Framer Motion',
+          'Redux Toolkit',
+          'REST APIs',
+        ],
       },
     ],
   },
@@ -78,12 +88,10 @@ export const experiences: ExperienceItem[] = [
         employmentPeriod: { start: '06.2023', end: '04.2024' },
         employmentType: 'Full-time',
         description: `
-- Designed and customized WordPress websites, including theme modifications tailored to client-specific needs.
-- Extended existing websites with dynamic PHP-based features and custom functionality.
-- Improved site performance, leading to better page speed scores and increased search visibility.
-- Handled website deployment, hosting setups, and troubleshooting to keep projects stable and accessible.
+- Built and customized client websites to meet business needs, delivering new features and design updates.
+- Built responsive website frontends from Figma designs, matching the designs closely across devices.
         `.trim(),
-        skills: ['WordPress', 'PHP', 'HTML', 'CSS', 'Performance Optimization'],
+        skills: ['HTML', 'CSS', 'JavaScript', 'Figma'],
       },
     ],
   },

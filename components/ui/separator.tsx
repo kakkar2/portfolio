@@ -11,7 +11,15 @@ const separatorVariants = cva('shrink-0', {
     variant: {
       default:
         'bg-border data-horizontal:h-px data-horizontal:w-full data-vertical:w-px data-vertical:self-stretch',
-      rail: 'border-border/75 data-horizontal:h-0 data-horizontal:w-full data-horizontal:border-t data-horizontal:border-dashed data-vertical:w-0 data-vertical:self-stretch data-vertical:border-l data-vertical:border-dashed',
+      rail: [
+        '[--c:color-mix(in_oklab,var(--muted-foreground)_25%,transparent)]',
+        'data-horizontal:h-px data-horizontal:w-full',
+        'data-horizontal:bg-[linear-gradient(to_right,var(--c)_6px,transparent_0)]',
+        'data-horizontal:bg-[length:10px_1px] data-horizontal:bg-repeat-x',
+        'data-vertical:w-px data-vertical:self-stretch',
+        'data-vertical:bg-[linear-gradient(to_bottom,var(--c)_6px,transparent_0)]',
+        'data-vertical:bg-[length:1px_10px] data-vertical:bg-repeat-y',
+      ],
     },
   },
   defaultVariants: {
