@@ -11,11 +11,11 @@ export const siteConfig = {
     twitter: 'https://x.com/LalitKakkar7',
     linkedin: 'https://linkedin.com/in/lalit-kakkar50',
     email: 'mailto:lalitkakkar50@gmail.com',
-    npm: 'https://www.npmjs.com/package/create-prodkit',
+    npm: 'https://www.npmjs.com/package/create-dxkit',
   },
   featuredPackage: {
-    name: 'create-prodkit',
-    href: 'https://www.npmjs.com/package/create-prodkit',
+    name: 'create-dxkit',
+    href: 'https://www.npmjs.com/package/create-dxkit',
     description: 'a framework-agnostic DX setup tool for any JS/TS project.',
   },
 }

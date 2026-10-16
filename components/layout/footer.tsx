@@ -5,7 +5,7 @@ import { siteConfig } from '@/config/site'
 
 export function Footer() {
   return (
-    <footer className="relative isolate overflow-hidden border-t border-border">
+    <footer className="relative isolate overflow-visible border-t border-border">
       <div className="container relative mx-auto flex max-w-3xl flex-col justify-between px-5 py-6 sm:px-6 lg:px-8">
         <div className="flex flex-col-reverse items-start justify-between gap-3 sm:flex-row sm:items-center sm:gap-4">
           <p className="text-xs text-muted-foreground/50 group">

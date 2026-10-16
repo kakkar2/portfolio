@@ -72,7 +72,7 @@ export const stack: StackCategory[] = [
     label: 'Open Source',
     items: [
       {
-        name: 'create-prodkit',
+        name: 'create-dxkit',
         icon: 'logos:npm-icon',
       },
     ],

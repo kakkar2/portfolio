@@ -6,6 +6,7 @@ import Link from 'next/link'
 
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { Separator } from '@/components/ui/separator'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { siteConfig } from '@/config/site'
 import { SOCIAL_LINKS } from '@/data/social-links'
@@ -177,6 +178,14 @@ export function Hero() {
             </Tooltip>
           ))}
         </motion.nav>
+
+        <motion.div
+          variants={resolvedItemVariants}
+          transition={{ delay: prefersReducedMotion ? 0.3 : 0.6 }}
+          className="mt-7 -mb-7 w-full"
+        >
+          <Separator variant="rail" />
+        </motion.div>
       </motion.div>
     </section>
   )
